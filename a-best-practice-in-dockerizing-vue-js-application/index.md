@@ -4,7 +4,11 @@
 
 [Jeya Gandhi Rajan](https://developer.ibm.com/recipes/author/jeyagandhi/)
 
+Tags: Cloud computing, Web development
+
 Published on March 2, 2020 / Updated on March 2, 2020
+
+!![](/images/image1.png)
 
 ## Overview
 
@@ -119,14 +123,14 @@ WORKDIR /app
 
 COPY ./dist .
 
-    EXPOSE 8080:8080
+EXPOSE 8080:8080
 
-    CMD [“nginx”, “-g”, “daemon off;”]
+CMD [“nginx”, “-g”, “daemon off;”]
 ```
 
 Now Vue.js app is wrapped with NGINX webserver in the image. So the NGINX Webserver will serve the pages when app is accessed.
 
-1. Build the docker image, deploy in Openshift and create a route for this service
+2. Build the docker image, deploy in Openshift and create a route for this service
 
 The application would work without any issue.
 
