@@ -26,7 +26,6 @@ Vue.js is a great JavaScript framework to quickly get started building single pa
 
 Here are the some steps that we will follow to create a new Vue App.
 
-
 1. Install Vue Cli
 ```
 $ npm install -g @vue/cli
@@ -38,7 +37,6 @@ $ vue create vue-app
 3. Build and test the App
 ```
 $ cd vue-app
-
 $ npm run build
 ```
 This will create a production ready minimalistic version of your single page application in /dist folder. You will have index.html in it.
