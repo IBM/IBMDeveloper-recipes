@@ -10,19 +10,19 @@ Published on March 2, 2020 / Updated on March 2, 2020
 
 ![](images/image1.png)
 
-## Overview
+### Overview
 
 Skill Level: Any Skill Level
 
 This recipe explains a very important Best Practice in Dockerizing the Vue.js application. The same could be applicable for any Node.js applications as well.
 
-## Step-by-step
+### Step-by-step
 
-### 1. About Vue.js
+#### 1. About Vue.js
 
 Vue.js is a great JavaScript framework to quickly get started building single page applications in JavaScript. Its simplicity makes it easy to get started, but it’s robust enough to build large production applications.
 
-### 2. Create Vue App
+#### 2. Create Vue App
 
 Here are the some steps that we will follow to create a new Vue App.
 
@@ -41,7 +41,7 @@ $ npm run build
 ```
 This will create a production ready minimalistic version of your single page application in /dist folder. You will have index.html in it.
 
-### 3. Dockerize the App
+#### 3. Dockerize the App
 
 Here is the Normal process for Dockerizing the app
 
@@ -91,7 +91,7 @@ RUN npm run build
 
 10. Access the service using NodePort.
 
-### 4. Issues with this Dockerization and Solution
+#### 4. Issues with this Dockerization and Solution
 
 Exposing a service through NodePort is not a good practice. So we need to find other way to expose it.
 
@@ -105,7 +105,7 @@ Always bundle the image with a webserver in order to expose your service externa
 
 Lets bundle the image with NGINX webserver.
 
-### 5. Best way to Dockerize
+#### 5. Best way to Dockerize
 
 1. Use NGINX as FROM Image and copy the app code into the appropriate folder.
 
@@ -132,11 +132,11 @@ Now Vue.js app is wrapped with NGINX webserver in the image. So the NGINX Webser
 
 The application would work without any issue.
 
-## Conclusion
+### Conclusion
 
 If you want to expose any of your service to external to the cluster, it is always wrap your app with NGINX kind of webserver.
 
-## References
+### References
 
 Here are some references about this issue
 
