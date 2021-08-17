@@ -8,7 +8,7 @@ Tags: Cloud computing, Web development
 
 Published on March 2, 2020 / Updated on March 2, 2020
 
-!![](/images/image1.png)
+![](/images/image1.png)
 
 ## Overview
 
