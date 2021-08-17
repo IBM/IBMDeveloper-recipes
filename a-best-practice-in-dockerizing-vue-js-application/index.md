@@ -3,6 +3,7 @@
 ## A best Practice in Dockerizing Vue.js or Node.js Application
 
 [Jeya Gandhi Rajan](https://developer.ibm.com/recipes/author/jeyagandhi/)
+
 Published on March 2, 2020 / Updated on March 2, 2020
 
 ## Overview
@@ -13,11 +14,11 @@ This recipe explains a very important Best Practice in Dockerizing the Vue.js ap
 
 ## Step-by-step
 
-### About Vue.js
+### 1. About Vue.js
 
 Vue.js is a great JavaScript framework to quickly get started building single page applications in JavaScript. Its simplicity makes it easy to get started, but it’s robust enough to build large production applications.
 
-### Create Vue App
+### 2. Create Vue App
 
 Here are the some steps that we will follow to create a new Vue App.
 
@@ -38,7 +39,7 @@ $ npm run build
 ```
 This will create a production ready minimalistic version of your single page application in /dist folder. You will have index.html in it.
 
-### Dockerize the App
+### 3. Dockerize the App
 
 Here is the Normal process for Dockerizing the app
 
@@ -46,25 +47,25 @@ Here is the Normal process for Dockerizing the app
 ```
 FROM node:lts-alpine
 ```
-1. Then we create workdirectory
+2. Then we create workdirectory
 ```
 WORKDIR /app
 ```
-1. Install your app dependencies
+3. Install your app dependencies
 ```
 COPY package*.json ./
 
 RUN npm install
 ```
-1. Copy the Vue app files.
+4. Copy the Vue app files.
 ```
 COPY ./dist .
 ```
-1. Define the command to run your app
+5. Define the command to run your app
 ```
 RUN npm run build
 ```
-1. The final Dockerfile looks like this.
+6. The final Dockerfile looks like this.
 ```
 FROM node:lts-alpine
 
@@ -80,15 +81,15 @@ EXPOSE 8080
 
 RUN npm run build
 ```
-1. Create a docker image using this Dockerfile
+7. Create a docker image using this Dockerfile
 
-1. Deploy the image in Kubernetes or in Openshift
+8. Deploy the image in Kubernetes or in Openshift
 
-1. Expose the app as Service using NodePort.
+9. Expose the app as Service using NodePort.
 
-1. Access the service using NodePort.
+10. Access the service using NodePort.
 
-### Issues with this Dockerization and Solution
+### 4. Issues with this Dockerization and Solution
 
 Exposing a service through NodePort is not a good practice. So we need to find other way to expose it.
 
@@ -102,7 +103,7 @@ Always bundle the image with a webserver in order to expose your service externa
 
 Lets bundle the image with NGINX webserver.
 
-### Best way to Dockerize
+### 5. Best way to Dockerize
 
 1. Use NGINX as FROM Image and copy the app code into the appropriate folder.
 
