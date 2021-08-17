@@ -23,10 +23,14 @@ Here are the some steps that we will follow to create a new Vue App.
 
 
 1. Install Vue Cli
-`$ npm install -g @vue/cli`
+```
+$ npm install -g @vue/cli
+```
 1. Create new App
-`$ vue create vue-app`
-2. Build and test the App
+```
+$ vue create vue-app
+```
+1. Build and test the App
 ```
 $ cd vue-app
 
