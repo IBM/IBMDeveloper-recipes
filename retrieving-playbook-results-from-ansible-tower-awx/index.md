@@ -107,7 +107,7 @@ For testing, an inventory called yellowzone is created with multiple VMs four of
 
 Figure 2: Host Variables
 
- ![](Screen-Shot-2020-06-22-at-5.21.37-PM.png)
+ ![](images/Screen-Shot-2020-06-22-at-5.21.37-PM.png)
 
 #### 6.
 Source code for playbook pwquality.yml
