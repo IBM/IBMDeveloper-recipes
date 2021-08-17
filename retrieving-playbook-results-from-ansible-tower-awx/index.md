@@ -109,8 +109,7 @@ Figure 2: Host Variables
 
  ![](images/Screen-Shot-2020-06-22-at-5.21.37-PM.png)
 
-#### 6.
-Source code for playbook pwquality.yml
+#### 6. Source code for playbook pwquality.yml
 
 The source code for the pwquality.yml is shown below. The [first task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L10-L12) reads the configuration file. The [second task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L14-L18) sets the name value pairs in pwquality_values. The [third task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L20-L23) collects all the information json form. The final [fourth task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L26-L30) prints out the json in a format that can be parsed by the external client.
 ```
@@ -155,7 +154,7 @@ The tasks in the playbook are executed with the default [linear strategy](https:
 
 The job is run against an inventory with four VMs selected using `LIMIT=aakrhel001*,aakrhel002*,aakrhel003*,aakrhel005*` using the Tower UI. The `aakrhel005.yellowykt.com` is not accessible on port 22 and will therefore fail. Note the job id. The output as seen in Ansible Tower GUI is as follows:
 
-![](Screen-Shot-2020-07-13-at-4.59.27-PM.png)
+![](images/Screen-Shot-2020-07-13-at-4.59.27-PM.png)
 
 ```
 TASK [Tower Response] **********************************************************
