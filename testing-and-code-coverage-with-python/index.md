@@ -154,6 +154,7 @@ def test_0020_subtract(self):
 ```
 
 After adding the above method, calculate the code coverage again after adding above method:
+
 ```
 $ coverage run test.py
 test_0010_add (__main__.TestApp)
