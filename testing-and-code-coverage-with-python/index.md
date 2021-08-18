@@ -194,4 +194,4 @@ $ coverage html
 
 This will create a folder at the current working directory with the name “**htmlcov**”. Inside this folder there would be a file named “**app\_py.html**”. Open this file in any browser to have a visual overview of the coverage.
 
-![Code Coverage Visual](/recipes/wp-content/uploads/sites/41/2018/02/Screen-Shot-2018-02-01-at-3.35.59-PM.png)
+![Code Coverage Visual](images/Screen-Shot-2018-02-01-at-3.35.59-PM.png)
