@@ -173,24 +173,24 @@ test.py      18      0   100%
 TOTAL        32      7    78%
 ```
 
-    The code coverage has increased to 78% on adding another test case. It can be increased further to 100% in a similar fashion.
+The code coverage has increased to 78% on adding another test case. It can be increased further to 100% in a similar fashion.
 
-6.  #### Understanding code coverage metrics
+#### 6. Understanding code coverage metrics
 
-    Code coverage is basically a percentage of count of lines that the test cases traversed to the overall lines in the code. This would be called Path Coverage. For more information on code coverage, [see this article](https://www.sealights.io/test-metrics/code-coverage-metrics/).
+Code coverage is basically a percentage of count of lines that the test cases traversed to the overall lines in the code. This would be called Path Coverage. For more information on code coverage, [see this article](https://www.sealights.io/test-metrics/code-coverage-metrics/).
 
-    In this program, we have multiple conditions for each mathematical operation, which means that testing would be done for multiple conditions inside code. This can be referred to as Condition Coverage.
+In this program, we have multiple conditions for each mathematical operation, which means that testing would be done for multiple conditions inside code. This can be referred to as Condition Coverage.
 
-    When the tests would be written for division, a boolean operation would be checked that would be Branch Coverage.
+When the tests would be written for division, a boolean operation would be checked that would be Branch Coverage.
 
-    There are multiple other metrics and types of coverage for more [complex programs](https://github.com/Flask-Framework-Cookbook/Chapter-10/blob/master/app_tests.py).
+There are multiple other metrics and types of coverage for more [complex programs](https://github.com/Flask-Framework-Cookbook/Chapter-10/blob/master/app_tests.py).
 
-    To have a visual look at how much of the code is actually traversed, generate a HTML report.
+To have a visual look at how much of the code is actually traversed, generate a HTML report.
 
+```
+$ coverage html
+```
 
-    $ coverage html
+This will create a folder at the current working directory with the name “**htmlcov**”. Inside this folder there would be a file named “**app\_py.html**”. Open this file in any browser to have a visual overview of the coverage.
 
-
-    This will create a folder at the current working directory with the name “**htmlcov**”. Inside this folder there would be a file named “**app\_py.html**”. Open this file in any browser to have a visual overview of the coverage.
-
-    ![Code Coverage Visual](/recipes/wp-content/uploads/sites/41/2018/02/Screen-Shot-2018-02-01-at-3.35.59-PM.png)
+![Code Coverage Visual](/recipes/wp-content/uploads/sites/41/2018/02/Screen-Shot-2018-02-01-at-3.35.59-PM.png)
