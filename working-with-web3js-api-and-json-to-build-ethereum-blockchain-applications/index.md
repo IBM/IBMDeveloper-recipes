@@ -276,9 +276,9 @@ console.log(result);
 }  
 });
 ```
-To stop and uninstall the filter, you can use the stopWatching  
+To stop and uninstall the filter, you can use the stopWatching method:
 ```
-method: filter.stopWatching();  
+filter.stopWatching();  
 ```
 As shown in the preceding screenshot, the log outputs are ABI-encoded, and to decode a log receipt, you can use decodeParameter available in web3Js 1.0 as follows:  
 ```
