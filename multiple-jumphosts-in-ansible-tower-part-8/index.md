@@ -43,7 +43,7 @@ The use_ssh_args argument to the synchronize module allows use of the ansible_ss
 
 This different escaping makes it difficult to get the synchronize module to work on more than two jumphosts. We will look at three solutions:
 
-1.  Use the **command/shell module** to run the rsync directly on localhost with the correct escaping as required by rsync for the multiple jumphosts with the ----rsh (same as -e) parameter.
+1.  Use the **command/shell module** to run the rsync directly on localhost with the correct escaping as required by rsync for the multiple jumphosts with the --rsh (same as -e) parameter.
 2.  Use the **synchronize module with escaping** around all three of the above sources of problems. We need to work really hard on figuring out the escaping of characters.
 3.  Use the synchronize module with **ssh chaining** -- Use ssh-add to add the jumphost and target endpoint ssh keys and use the -A parameter for the chained ssh so that keys from source can be used (without the nested ProxyCommand for the ansible_ssh_common_args). This however requires that we add our jumphost keys to the ssh-agent.
 
@@ -59,7 +59,7 @@ We selected the "yellowzone_5jumphost_credential" of the custom credential type 
 
 ![](images/Screen-Shot-2020-07-27-at-3.49.12-PM.png)
 
-The source code for the playbook synchronize_with_rsync.yaml is shown below. The [first play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_rsync.yaml#L2-L7 "ensures that any ssh keys with passphrase are added to the ssh-agent") ensures that any ssh keys with passphrase are added to the ssh-agent as introduced in [Part 4](https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-4/ "Multiple Jumphosts in Ansible Tower - Part 4"). The [second play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_rsync.yaml#L9-L27 "Check the ssh key added to ssh-agent") shows that the ssh key added by Ansible Tower for the Machine Credential (of the target host endpoint) to the ssh-agent with the "ssh-add -l command". The "ls -las {{ machine_credential_ssh_private_key_file }}" shows that the key that was added is not actually present on the file system.
+The source code for the playbook synchronize_with_rsync.yaml is shown below. The [first play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_rsync.yaml#L2-L7 "ensures that any ssh keys with passphrase are added to the ssh-agent") ensures that any ssh keys with passphrase are added to the ssh-agent as introduced in [Part 4](../multiple-jumphosts-in-ansible-tower-part-4/index.md "Multiple Jumphosts in Ansible Tower - Part 4"). The [second play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_rsync.yaml#L9-L27 "Check the ssh key added to ssh-agent") shows that the ssh key added by Ansible Tower for the Machine Credential (of the target host endpoint) to the ssh-agent with the "ssh-add -l command". The "ls -las {{ machine_credential_ssh_private_key_file }}" shows that the key that was added is not actually present on the file system.
 
 ``` yaml
 ---
@@ -378,7 +378,7 @@ The output of the job run with the rsync command is shown in screenshot below:
 
 ![](images/Screen-Shot-2020-07-28-at-5.18.40-AM.png)
 
-The --rsh shows it using the single jumphost hop "ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com". Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
+The --rsh shows it using the single jumphost hop "ec2-user\@ec2-52-201-237-93.compute-1.amazonaws.com". Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
 
 ``bash-4.2$ eval `ssh-agent` ``\
 `Agent pid 1734`\
@@ -397,7 +397,7 @@ The --rsh shows it using the single jumphost hop "ec2-user@ec2-52-201-237-93.com
 `<<CHANGED>><f+++++++++ x.x`\
 `<<CHANGED>><f+++++++++ y.y`
 
-The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user\@aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in ----rsh='ssh...' and ----out-format='<<CHANGED>>%i %n%L'.
+The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user\@aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in --rsh='ssh...' and --out-format='<<CHANGED>>%i %n%L'.
 
 We just switch the last two parameters in order to retrieve the files from host endpoint (aakrhel005.yellowykt.com) to the local server as follows:
 
@@ -442,7 +442,7 @@ If you have the ssh keys on the Soure/Ansible Tower machine, then you start the 
 
 #### 7. Conclusion
 
-We saw how to synchronize files by directly calling rsync or using the synchronize module using three approaches. This Part 8 showed the advantages of each approach with respect to flexibility, nested escaping of characters and use of ssh agent forwarding with ssh chaining. In the next Part 9, we will look into accessing a vault over multiple jumphost hops to retrieve endpoint credentials.
+We saw how to synchronize files by directly calling rsync or using the synchronize module using three approaches. This Part 8 showed the advantages of each approach with respect to flexibility, nested escaping of characters and use of ssh agent forwarding with ssh chaining. In the next [Part 9](../multiple-jumphosts-in-ansible-tower-part-9/index.md "Multiple Jumphosts in Ansible Tower - Part 9"), we will look into accessing a vault over multiple jumphost hops to retrieve endpoint credentials.
 
 #### 8. References
 - Issues using Ansible synchronize module to Transfer files from Local to Remote host  <https://github.com/ansible/ansible/issues/35717>
