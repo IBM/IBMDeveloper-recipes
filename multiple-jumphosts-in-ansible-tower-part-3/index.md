@@ -1,12 +1,14 @@
 # Multiple Jumphosts in Ansible Tower - Part 3
 
-##  Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys
+## Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys
 
 [Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
 
 Tags: Cloud computing, DevOps, Linux
 
 Published on July 4, 2020 / Updated on July 12, 2020
+
+![](images/Screen-Shot-2020-07-04-at-5.57.10-PM-1024x431.png)
 
 ### Overview
 
