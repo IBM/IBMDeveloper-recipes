@@ -8,6 +8,8 @@ Tags: Cloud computing, DevOps, Linux
 
 Published on July 3, 2020 / Updated on August 10, 2021
 
+![](images/Screen-Shot-2020-07-04-at-5.59.42-PM-1024x413.png)
+
 ### Overview
 
 Skill Level: Beginner
