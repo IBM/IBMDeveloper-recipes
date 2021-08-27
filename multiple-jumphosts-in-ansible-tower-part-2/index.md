@@ -1,4 +1,5 @@
 # Multiple Jumphosts in Ansible Tower - Part 2
+
 ##  Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy
 
 [Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
@@ -344,12 +345,12 @@ Killed by signal 1.
 
 The common Ansible parameters used for Windows are shown below:
 
-`#ansible_port=5985\
-ansible_port=5986\
-ansible_connection=winrm\
-#ansible_winrm_scheme=http\
-ansible_winrm_scheme=https\
-ansible_winrm_server_cert_validation=ignore`
+`#ansible_port=5985`\
+`ansible_port=5986`\
+`ansible_connection=winrm`\
+`#ansible_winrm_scheme=http`\
+`ansible_winrm_scheme=https`\
+`ansible_winrm_server_cert_validation=ignore`
 
 On Mac you need to use the env no_proxy='*' to avoid the "ERROR! A worker was found in a dead state". It is a known problem on macOS and is documented for the [WinRM connection plugins](https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/user_guide/windows_winrm.rst#what-is-winrm). It also mentions to avoid using Kerberos authentication.
 
@@ -359,15 +360,17 @@ On Mac you need to use the env no_proxy='*' to avoid the "ERROR! A worker was fo
 
 Output of win_ping module above:
 
-`aakwin2012-1.yellowykt.com | SUCCESS => {\
-    "changed": false,\
-    "invocation": {\
-        "module_args": {\
-            "data": "pong"\
-        }\
-    },\
-    "ping": "pong"\
-}`
+```
+aakwin2012-1.yellowykt.com | SUCCESS => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "data": "pong"
+        }
+    },
+    "ping": "pong"
+}
+```
 
 **Show the directory "c:\\" output with win_shell module**
 
@@ -379,213 +382,217 @@ You can use the ansible-connection=winrm with ansible_winrm_transport=basic (or 
 
 #### 8. Ansible to connect to Linux host from Mac (from where the tunnel is established)
 
-    With Ansible command, we can use the /usr/bin/nc with -X in the ProxyCommand from Mac to connect to Linux host same as we did directly with ssh. The SOCKS5 ssh tunnel is already established with socks port 127.0.01:1234 previously. If you killed the tunnel, you will need to recreate it.
+With Ansible command, we can use the /usr/bin/nc with -X in the ProxyCommand from Mac to connect to Linux host same as we did directly with ssh. The SOCKS5 ssh tunnel is already established with socks port 127.0.01:1234 previously. If you killed the tunnel, you will need to recreate it.
 
-    `ansible -vvv -i "aakrhel006.yellowykt.com," aakrhel006.yellowykt.com -m ping -e "ansible_user=ec2-user" -e "ansible_ssh_private_key_file=~/amazontestkey.pem" -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"/usr/bin/nc -X 5 -x 127.0.0.1:1234 %h %p\"'"`
+`ansible -vvv -i "aakrhel006.yellowykt.com," aakrhel006.yellowykt.com -m ping -e "ansible_user=ec2-user" -e "ansible_ssh_private_key_file=~/amazontestkey.pem" -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"/usr/bin/nc -X 5 -x 127.0.0.1:1234 %h %p\"'"`
 
-    Output is as follows:
+Output is as follows:
 
-    `aakrhel006.yellowykt.com | SUCCESS => {\
-        "ansible_facts": {\
-            "discovered_interpreter_python": "/usr/bin/python"\
-        },\
-        "changed": false,\
-        "invocation": {\
-            "module_args": {\
-                "data": "pong"\
-            }\
-        },\
-        "ping": "pong"\
-    }`
+```
+aakrhel006.yellowykt.com | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "data": "pong"
+        }
+    },
+    "ping": "pong"
+}
+```
 
 #### 9. Ansible Tower
 
-    Finally, we have all the ingredients to make this work on Ansible Tower. We start by adding the hosts to the inventory.
+Finally, we have all the ingredients to make this work on Ansible Tower. We start by adding the hosts to the inventory.
 
-    In the inventory, there is a aakwin2012-1.yellowykt.com host (Windows 2012 VM) and aakwin2016-1.yellowykt.com host (Windows 2016 VM). The following variables are added to the host variables of both:
+In the inventory, there is a aakwin2012-1.yellowykt.com host (Windows 2012 VM) and aakwin2016-1.yellowykt.com host (Windows 2016 VM). The following variables are added to the host variables of both:
 
-    `ansible_psrp_proxy: socks5h://localhost:{{ jh1_socks_port if jh1_socks_port is defined else jh_socks_port }}\
-    ansible_connection: psrp\
-    ansible_psrp_protocol: http\
-    ansible_port: 5985`
+`ansible_psrp_proxy: socks5h://localhost:{{ jh1_socks_port if jh1_socks_port is defined else jh_socks_port }}\
+ansible_connection: psrp\
+ansible_psrp_protocol: http\
+ansible_port: 5985`
 
-    The reason to use "{{ jh1_socks_port if jh1_socks_port is defined else jh_socks_port }}" is to allow defining the socks port in the jumphost credential with the "jh_" or the "jh1_" prefix. This also demonstrates variables using the Jinja2 templating. This is also shown in the screenshot below:
+The reason to use "{{ jh1_socks_port if jh1_socks_port is defined else jh_socks_port }}" is to allow defining the socks port in the jumphost credential with the "jh_" or the "jh1_" prefix. This also demonstrates variables using the Jinja2 templating. This is also shown in the screenshot below:
 
-    ![Screen-Shot-2020-06-29-at-5.06.13-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-5.06.13-PM.png)
+![Screen-Shot-2020-06-29-at-5.06.13-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-5.06.13-PM.png)
 
-    Here is the job template windows_test_job_template for playbook [windowstest_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowstest_with_tunnel.py "windowstest_with_tunnel.yaml"). Both the Windows host machine credential (yellowzone_windows_endpoint_credential) and the required jumphost credential (same jumphost_credential created in the [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1")) are passed. The jumphost credential is used by the first play that invokes the role in the playbook to establish the tunnel and runs on localhost (on Tower celery/task container). The role correctly selects the number of jumps based on the number of hops specified by the credential type. When the next play runs, it uses the tunnel to run the tasks on the Windows endpoint via the tunnel because of the ansible_psrp_proxy that connect to the socks5h://localhost:{{ jh_socks_port }}. The tunnel runs in an Isolated Job and automatically gets destroyed when the Ansible Tower job finishes.
+Here is the job template windows_test_job_template for playbook [windowstest_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowstest_with_tunnel.py "windowstest_with_tunnel.yaml"). Both the Windows host machine credential (yellowzone_windows_endpoint_credential) and the required jumphost credential (same jumphost_credential created in the [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1")) are passed. The jumphost credential is used by the first play that invokes the role in the playbook to establish the tunnel and runs on localhost (on Tower celery/task container). The role correctly selects the number of jumps based on the number of hops specified by the credential type. When the next play runs, it uses the tunnel to run the tasks on the Windows endpoint via the tunnel because of the ansible_psrp_proxy that connect to the socks5h://localhost:{{ jh_socks_port }}. The tunnel runs in an Isolated Job and automatically gets destroyed when the Ansible Tower job finishes.
 
-    Older versions of Tower (3.5.3) were able to persist the tunnel across multiple jobs. But now with Tower Version 3.6.x, with Isolated Jobs (bubblewrap) enabled, any processes started in background are killed at end of the job. So we cannot persist the Socks tunnel using roles. The tunnel must be established for every job.
+Older versions of Tower (3.5.3) were able to persist the tunnel across multiple jobs. But now with Tower Version 3.6.x, with Isolated Jobs (bubblewrap) enabled, any processes started in background are killed at end of the job. So we cannot persist the Socks tunnel using roles. The tunnel must be established for every job.
 
-    Do not pass multiple jumphost credentials of different types. Only one machine credential and one jumphost credential should be passed to the job template. Additional credentials (for example Tower credential, etc. can be passed, but only one of each type).\
-     ![Screen-Shot-2020-07-01-at-7.38.51-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.38.51-AM.png)
+Do not pass multiple jumphost credentials of different types. Only one machine credential and one jumphost credential should be passed to the job template. Additional credentials (for example Tower credential, etc. can be passed, but only one of each type).\
+ ![Screen-Shot-2020-07-01-at-7.38.51-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.38.51-AM.png)
 
-    We ran the job against the LIMIT: "win2012-1* localhost". The localhost is required to establish the tunnel. The output of the job run is as follows. It will use the correct task from the role to establish the tunnel. For example, in this case with **single jumphost**:
+We ran the job against the LIMIT: "win2012-1* localhost". The localhost is required to establish the tunnel. The output of the job run is as follows. It will use the correct task from the role to establish the tunnel. For example, in this case with **single jumphost**:
 
-    `TASK [ansible-role-socks5-tunnel-nopassphrase : Creating socks tunnel without passphrase for single jumphost] ***\
-    task path: /tmp/awx_12514_77i2qfqs/project/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/tasks/main.yml:4`
+`TASK [ansible-role-socks5-tunnel-nopassphrase : Creating socks tunnel without passphrase for single jumphost] ***\
+task path: /tmp/awx_12514_77i2qfqs/project/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/tasks/main.yml:4`
 
-    ![Screen-Shot-2020-07-01-at-7.42.01-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.42.01-AM.png)
+![Screen-Shot-2020-07-01-at-7.42.01-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.42.01-AM.png)
 
-    The screenshot above shows the commands from the playbook being executed successfully.
+The screenshot above shows the commands from the playbook being executed successfully.
 
-    We can also run with the full Inventory and localhost (if you keep the LIMIT empty) or with additional Windows hosts in the LIMIT such as "aakwin2012-1* aakwin2016-1* localhost". Just remember to have the localhost in addition to any other hosts that you want to run the play on if you specify the LIMIT. [Multiple patterns](https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html "Multiple patterns") can be separated by colons (":").
+We can also run with the full Inventory and localhost (if you keep the LIMIT empty) or with additional Windows hosts in the LIMIT such as "aakwin2012-1* aakwin2016-1* localhost". Just remember to have the localhost in addition to any other hosts that you want to run the play on if you specify the LIMIT. [Multiple patterns](https://docs.ansible.com/ansible/latest/user_guide/intro_patterns.html "Multiple patterns") can be separated by colons (":").
 
-    The source code for the [windowstest_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowstest_with_tunnel.py) is shown below with the win_ping, win_shell and win_copy that all run successfully over the tunnel.
+The source code for the [windowstest_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowstest_with_tunnel.py) is shown below with the win_ping, win_shell and win_copy that all run successfully over the tunnel.
 
-    **windowstest_with_tunnel.yaml**
+**windowstest_with_tunnel.yaml**
 
-    `- name: Role ensures that the socks tunnel is setup\
-      hosts: localhost\
-      connection: local\
-      gather_facts: false\
-      roles:\
-        - ansible-role-socks5-tunnel-nopassphrase
+```
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - ansible-role-socks5-tunnel-nopassphrase
 
-    - hosts: all\
-      gather_facts: no\
-      tasks:\
-        - name: Do Ping\
-          win_ping:\
-          register: ping_output\
-          ignore_unreachable: true
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Do Ping
+      win_ping:
+      register: ping_output
+      ignore_unreachable: true
 
-        - debug:\
-            var: ping_output
+    - debug:
+        var: ping_output
 
-        - win_shell: set\
-          args:\
-            executable: cmd\
-          register: homedir_out
+    - win_shell: set
+      args:
+        executable: cmd
+      register: homedir_out
 
-        # Works on Windows 2016 and 2008 only if someone is logged in using that Userid\
-        #- win_shell: echo '%HOMEDRIVE%%HOMEPATH%'\
-        - win_shell: echo %SystemRoot% %USERPROFILE%\
-          args:\
-            executable: cmd\
-          register: homedir_out\
-        - debug:\
-            var: homedir_out
+    # Works on Windows 2016 and 2008 only if someone is logged in using that Userid
+    #- win_shell: echo '%HOMEDRIVE%%HOMEPATH%'
+    - win_shell: echo %SystemRoot% %USERPROFILE%
+      args:
+        executable: cmd
+      register: homedir_out
+    - debug:
+        var: homedir_out
 
-        - name: get powershell version\
-          raw: $PSVersionTable`
+    - name: get powershell version
+      raw: $PSVersionTable
+```
 
-    `- name: Copying files to all Windows Endpoints\
-    win_copy:\
-    content: abc123\
-    #src : "windowstest_with_tunnel.yaml"\
-    dest: C:\Temp\foo.txt`
+The source code for the role [ansible-role-socks5-tunnel-nopassphrase](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/tasks/main.yml) is shown below:
 
-    The source code for the role [ansible-role-socks5-tunnel-nopassphrase](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/tasks/main.yml) is shown below:
+**tasks/main.yml**
 
-    **tasks/main.yml**
+```
+---
+- name: Creating socks tunnel without passphrase for single jumphost
+  block:
+    - name: Creating socks tunnel without passphrase for single jumphost
+      shell: ssh -i {{ jh_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -fN -D localhost:{{ jh_socks_port }} -p {{ jh_ssh_port }} {{ jh_ssh_user }}@{{ jh_ip }};sleep 2
+  when:
+    - jh_socks_port is defined
+    - (jh_ssh_private_key|length > 0)
 
-    `---\
-    - name: Creating socks tunnel without passphrase for single jumphost\
-      block:\
-        - name: Creating socks tunnel without passphrase for single jumphost\
-          shell: ssh -i {{ jh_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -fN -D localhost:{{ jh_socks_port }} -p {{ jh_ssh_port }} {{ jh_ssh_user }}@{{ jh_ip }};sleep 2\
-      when:\
-        - jh_socks_port is defined\
-        - (jh_ssh_private_key|length > 0)
+- name: Setting of required socks_port variables for single jumphost
+  set_fact:
+    jh_socks_port: "{{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }}"
 
-    - name: Setting of required socks_port variables for single jumphost\
-      set_fact:\
-        jh_socks_port: "{{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }}"
+- name: Creating socks tunnel without passphrase for single jumphost
+  shell: ssh -i {{ jh1_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -fN -D localhost:{{ jh_socks_port }} -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }};sleep 2
+  when:
+    - (jh2_ssh_private_key is undefined) or (jh2_ssh_private_key|length == 0)
+    - (jh1_ssh_private_key|length > 0)
 
-    - name: Creating socks tunnel without passphrase for single jumphost\
-      shell: ssh -i {{ jh1_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -fN -D localhost:{{ jh_socks_port }} -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }};sleep 2\
-      when:\
-        - (jh2_ssh_private_key is undefined) or (jh2_ssh_private_key|length == 0)\
-        - (jh1_ssh_private_key|length > 0)
+- name: Creating socks tunnel without passphrase for two jumphosts
+  shell: ssh -i {{ jh2_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oProxyCommand="ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }};sleep 2
+  when:
+    - (jh3_ssh_private_key is undefined) or (jh3_ssh_private_key|length == 0)
+    - (jh2_ssh_private_key|length > 0)
 
-    - name: Creating socks tunnel without passphrase for two jumphosts\
-      shell: ssh -i {{ jh2_ssh_private_key }} -oPubkeyAuthentication=yes -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oProxyCommand="ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }};sleep 2\
-      when:\
-        - (jh3_ssh_private_key is undefined) or (jh3_ssh_private_key|length == 0)\
-        - (jh2_ssh_private_key|length > 0)
+- name: Creating socks tunnel without passphrase for 3 jumphosts
+  shell: ssh -i {{ jh3_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }};sleep 2
+  when:
+    - (jh4_ssh_private_key is undefined) or (jh4_ssh_private_key|length == 0)
+    - (jh3_ssh_private_key|length > 0)
 
-    - name: Creating socks tunnel without passphrase for 3 jumphosts\
-      shell: ssh -i {{ jh3_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }};sleep 2\
-      when:\
-        - (jh4_ssh_private_key is undefined) or (jh4_ssh_private_key|length == 0)\
-        - (jh3_ssh_private_key|length > 0)
+- name: Creating socks tunnel without passphrase for 4 jumphosts
+  shell: ssh -i {{ jh4_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh3_ssh_private_key }} -W {{ jh4_ip }}:{{ jh4_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\\\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}\" -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh4_ssh_port }} {{ jh4_ssh_user }}@{{ jh4_ip }};sleep 2
+  when:
+    - (jh5_ssh_private_key is undefined) or (jh5_ssh_private_key|length == 0)
+    - (jh4_ssh_private_key|length > 0)
 
-    - name: Creating socks tunnel without passphrase for 4 jumphosts\
-      shell: ssh -i {{ jh4_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh3_ssh_private_key }} -W {{ jh4_ip }}:{{ jh4_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\\\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}\" -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh4_ssh_port }} {{ jh4_ssh_user }}@{{ jh4_ip }};sleep 2\
-      when:\
-        - (jh5_ssh_private_key is undefined) or (jh5_ssh_private_key|length == 0)\
-        - (jh4_ssh_private_key|length > 0)
+- name: Creating socks tunnel without passphrase for 5 jumphosts
+  shell: ssh -i {{ jh5_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh4_ssh_private_key }} -W {{ jh5_ip }}:{{ jh5_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh3_ssh_private_key }} -W {{ jh4_ip }}:{{ jh4_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\"ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\\\\\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\\\\\\\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}\\\" -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }}\" -p {{ jh4_ssh_port }} {{ jh4_ssh_user }}@{{ jh4_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh5_ssh_port }} {{ jh5_ssh_user }}@{{ jh5_ip }};sleep 2
+  when:
+    - (jh6_ssh_private_key is undefined) or (jh6_ssh_private_key|length == 0)
+    - (jh5_ssh_private_key|length > 0)
+```
 
-    - name: Creating socks tunnel without passphrase for 5 jumphosts\
-      shell: ssh -i {{ jh5_ssh_private_key }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand="ssh -i {{ jh4_ssh_private_key }} -W {{ jh5_ip }}:{{ jh5_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\"ssh -i {{ jh3_ssh_private_key }} -W {{ jh4_ip }}:{{ jh4_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\"ssh -i {{ jh2_ssh_private_key }} -W {{ jh3_ip }}:{{ jh3_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oProxyCommand=\\\\\\\"ssh -i {{ jh1_ssh_private_key }} -W {{ jh2_ip }}:{{ jh2_ssh_port }} -oPubkeyAuthentication=yes -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -p {{ jh1_ssh_port }} {{ jh1_ssh_user }}@{{ jh1_ip }}\\\\\\\" -p {{ jh2_ssh_port }} {{ jh2_ssh_user }}@{{ jh2_ip }}\\\" -p {{ jh3_ssh_port }} {{ jh3_ssh_user }}@{{ jh3_ip }}\" -p {{ jh4_ssh_port }} {{ jh4_ssh_user }}@{{ jh4_ip }}" -fN -D localhost:{{ jh_socks_port }} -p {{ jh5_ssh_port }} {{ jh5_ssh_user }}@{{ jh5_ip }};sleep 2\
-      when:\
-        - (jh6_ssh_private_key is undefined) or (jh6_ssh_private_key|length == 0)\
-        - (jh5_ssh_private_key|length > 0)`
+The [vars/main.yml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/vars/main.yml) is shown below. This looks up the environment variables for the JH*_SSH_PRIVATE_KEY and JH*_SSH_PRIVATE_KEY_PASSPHRASE and converts them to playbook variables jh*_ssh_private_key and jh*_ssh_private_key_passphrase respectively for each of the jumphosts.
 
-    The [vars/main.yml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/vars/main.yml) is shown below. This looks up the environment variables for the JH*_SSH_PRIVATE_KEY and JH*_SSH_PRIVATE_KEY_PASSPHRASE and converts them to playbook variables jh*_ssh_private_key and jh*_ssh_private_key_passphrase respectively for each of the jumphosts.
+```
+---
+jh_ssh_private_key: "{{ lookup('env','JH_SSH_PRIVATE_KEY') }}"
+jh_ssh_private_key_passphrase: "{{ lookup('env', 'JH_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh1_ssh_private_key: "{{ lookup('env','JH1_SSH_PRIVATE_KEY') }}"
+jh1_ssh_private_key_passphrase: "{{ lookup('env', 'JH1_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh2_ssh_private_key: "{{ lookup('env','JH2_SSH_PRIVATE_KEY') }}"
+jh2_ssh_private_key_passphrase: "{{ lookup('env', 'JH2_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh3_ssh_private_key: "{{ lookup('env','JH3_SSH_PRIVATE_KEY') }}"
+jh3_ssh_private_key_passphrase: "{{ lookup('env', 'JH3_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh4_ssh_private_key: "{{ lookup('env','JH4_SSH_PRIVATE_KEY') }}"
+jh4_ssh_private_key_passphrase: "{{ lookup('env', 'JH4_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh5_ssh_private_key: "{{ lookup('env','JH5_SSH_PRIVATE_KEY') }}"
+jh5_ssh_private_key_passphrase: "{{ lookup('env', 'JH5_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+jh6_ssh_private_key: "{{ lookup('env','JH6_SSH_PRIVATE_KEY') }}"
+jh6_ssh_private_key_passphrase: "{{ lookup('env', 'JH6_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
+```
 
-    `---\
-    jh_ssh_private_key: "{{ lookup('env','JH_SSH_PRIVATE_KEY') }}"\
-    jh_ssh_private_key_passphrase: "{{ lookup('env', 'JH_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh1_ssh_private_key: "{{ lookup('env','JH1_SSH_PRIVATE_KEY') }}"\
-    jh1_ssh_private_key_passphrase: "{{ lookup('env', 'JH1_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh2_ssh_private_key: "{{ lookup('env','JH2_SSH_PRIVATE_KEY') }}"\
-    jh2_ssh_private_key_passphrase: "{{ lookup('env', 'JH2_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh3_ssh_private_key: "{{ lookup('env','JH3_SSH_PRIVATE_KEY') }}"\
-    jh3_ssh_private_key_passphrase: "{{ lookup('env', 'JH3_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh4_ssh_private_key: "{{ lookup('env','JH4_SSH_PRIVATE_KEY') }}"\
-    jh4_ssh_private_key_passphrase: "{{ lookup('env', 'JH4_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh5_ssh_private_key: "{{ lookup('env','JH5_SSH_PRIVATE_KEY') }}"\
-    jh5_ssh_private_key_passphrase: "{{ lookup('env', 'JH5_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"\
-    jh6_ssh_private_key: "{{ lookup('env','JH6_SSH_PRIVATE_KEY') }}"\
-    jh6_ssh_private_key_passphrase: "{{ lookup('env', 'JH6_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"`
+#### 10. Connecting to Linux host using SOCKS5 tunnel
 
-10. #### Connecting to Linux host using SOCKS5 tunnel
+Shown below is the hostname aakrhel005.yellowykt.com in the yellowzone inventory with the ansible_port: 2222
 
-    Shown below is the hostname aakrhel005.yellowykt.com in the yellowzone inventory with the ansible_port: 2222
+![Screen-Shot-2020-06-29-at-6.18.58-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.58-PM.png)
 
-    ![Screen-Shot-2020-06-29-at-6.18.58-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.58-PM.png)
+In the host variables, this host has been configured to use the **connect-proxy** for ProxyCommand in the ansible_ssh_common_args (instead of the ssh that was used in [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1") -- The rest of the ansible_ssh_common_args are commented out). Either the "connect-proxy" or the "ncat --proxy-type socks5" or the "socat" shown below will work on Linux with the tunnel. Your Tower image needs to have the connect-proxy and ncat installed. Instructions to create a custom Tower Image for a podified install will be shown in [Part 5](../multiple-jumphosts-in-ansible-tower-part-5/index.md "Multiple Jumphosts in Ansible Tower - Part 5").
 
-    In the host variables, this host has been configured to use the **connect-proxy** for ProxyCommand in the ansible_ssh_common_args (instead of the ssh that was used in [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1") -- The rest of the ansible_ssh_common_args are commented out). Either the "connect-proxy" or the "ncat --proxy-type socks5" or the "socat" shown below will work on Linux with the tunnel. Your Tower image needs to have the connect-proxy and ncat installed. Instructions to create a custom Tower Image for a podified install will be shown in [Part 5](../multiple-jumphosts-in-ansible-tower-part-5/index.md "Multiple Jumphosts in Ansible Tower - Part 5").
+`ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="connect-proxy -S 127.0.0.1:{{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }} %h %p"'`
 
-    `ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="connect-proxy -S 127.0.0.1:{{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }} %h %p"'`
+`ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ncat --proxy-type socks5 --proxy 127.0.0.1:{{ jh_socks_port  if jh_socks_port is defined else jh1_socks_port }} %h %p"'`
 
-    `ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ncat --proxy-type socks5 --proxy 127.0.0.1:{{ jh_socks_port  if jh_socks_port is defined else jh1_socks_port }} %h %p"'`
+`ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="socat - socks4a:127.0.0.1:%h:%p,socksport={{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }}"'`
 
-    `ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="socat - socks4a:127.0.0.1:%h:%p,socksport={{ jh_socks_port if jh_socks_port is defined else jh1_socks_port }}"'`
+The job template that invokes the same tunnel role as before (ansible-role-socks5-tunnel-nopassphrase that was used for the windows job template) is shown below. Two credentials: the jumphost credential and the Linux endpoint credential are passed as shown in Part 1. However the difference this time is that it uses the [hello_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_tunnel.yaml) that invokes the role in its first play to establish the tunnel and in the second play runs the hostname using the shell module on the linux host. This second play uses the tunnel that was already established in the first play. The tunnel automatically gets terminated when the job completes because the ENABLE ISOLATED JOBS is enabled.
 
-    The job template that invokes the same tunnel role as before (ansible-role-socks5-tunnel-nopassphrase that was used for the windows job template) is shown below. Two credentials: the jumphost credential and the Linux endpoint credential are passed as shown in Part 1. However the difference this time is that it uses the [hello_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_tunnel.yaml) that invokes the role in its first play to establish the tunnel and in the second play runs the hostname using the shell module on the linux host. This second play uses the tunnel that was already established in the first play. The tunnel automatically gets terminated when the job completes because the ENABLE ISOLATED JOBS is enabled.
+![Screen-Shot-2020-06-29-at-6.18.06-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.06-PM.png)
 
-    ![Screen-Shot-2020-06-29-at-6.18.06-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.06-PM.png)
+Source code for the hello_with_tunnel.yaml
 
-    Source code for the hello_with_tunnel.yaml
+```
+---
+- name: Role ensures that the socks tunnel is setup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - ansible-role-socks5-tunnel-nopassphrase
 
-    `---\
-    - name: Role ensures that the socks tunnel is setup\
-      hosts: localhost\
-      connection: local\
-      gather_facts: false\
-      roles:\
-        - ansible-role-socks5-tunnel-nopassphrase
+- hosts: all
+  gather_facts: no
+  tasks:
+    - shell: echo Hello `hostname`
+      register: result
+```
 
-    - hosts: all\
-      gather_facts: no\
-      tasks:\
-        - shell: echo Hello `hostname`\
-          register: result`
+The job run shows the output where "ProxyCommand=connect-proxy -S 127.0.0.1:1235 %h %p" (that we selected in the host variables) is used to establish the tunnel. It outputs the hostname aakrhel005 by connecting to the host on port 2222.
 
-    The job run shows the output where "ProxyCommand=connect-proxy -S 127.0.0.1:1235 %h %p" (that we selected in the host variables) is used to establish the tunnel. It outputs the hostname aakrhel005 by connecting to the host on port 2222.
+![Screen-Shot-2020-06-29-at-6.17.32-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.17.32-PM.png)
 
-    ![Screen-Shot-2020-06-29-at-6.17.32-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.17.32-PM.png)
-
-    A final thing to note before ending this section is about using [ad-hoc commands](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html "ad-hoc commands"). In Ansible Tower, the "RUN COMMAND" only allow passing a Machine credential. Therefore, you cannot test running a module against a host directly when it needs to connect through one or more jumphosts because there is no direct connectivity to the endpoint host. Specifically, you cannot pass the Jumphost Credentials and the ssh key cannot be passed with extra vars.
+A final thing to note before ending this section is about using [ad-hoc commands](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html "ad-hoc commands"). In Ansible Tower, the "RUN COMMAND" only allow passing a Machine credential. Therefore, you cannot test running a module against a host directly when it needs to connect through one or more jumphosts because there is no direct connectivity to the endpoint host. Specifically, you cannot pass the Jumphost Credentials and the ssh key cannot be passed with extra vars.
 
 #### 11. Conclusion
 
-    Part 2 of this article showed how to create a tunnel with a role and run commands on target host Windows and Linux endpoints via multiple jumphost hops with playbooks in Ansible Tower with the use of new credential types for multiple jumphosts.
+Part 2 of this article showed how to create a tunnel with a role and run commands on target host Windows and Linux endpoints via multiple jumphost hops with playbooks in Ansible Tower with the use of new credential types for multiple jumphosts.
 
-    Passphrase for jumphosts will be enabled in [Part 3](../multiple-jumphosts-in-ansible-tower-part-3/index.md "Multiple Jumphosts in Ansible Tower - Part 3") and [Part 4](../multiple-jumphosts-in-ansible-tower-part-4/index.md "Multiple Jumphosts in Ansible Tower - Part 4") of this series where a role will be created to accept the same credentials types with an optional passphrase.
+Passphrase for jumphosts will be enabled in [Part 3](../multiple-jumphosts-in-ansible-tower-part-3/index.md "Multiple Jumphosts in Ansible Tower - Part 3") and [Part 4](../multiple-jumphosts-in-ansible-tower-part-4/index.md "Multiple Jumphosts in Ansible Tower - Part 4") of this series where a role will be created to accept the same credentials types with an optional passphrase.
 
 #### 12. References
 - Python client for the Windows Remote Management (WinRM) service <https://github.com/diyan/pywinrm>
