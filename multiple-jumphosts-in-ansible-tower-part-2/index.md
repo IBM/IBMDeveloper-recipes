@@ -1,12 +1,14 @@
 # Multiple Jumphosts in Ansible Tower - Part 2
 
-##  Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy
+## Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy
 
 [Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
 
 Tags: Cloud computing, DevOps, Linux
 
 Published on July 3, 2020 / Updated on July 12, 2020
+
+![](images/Screen-Shot-2020-07-03-at-5.44.41-PM.png)
 
 ### Overview
 
