@@ -397,7 +397,7 @@ The --rsh shows it using the single jumphost hop "ec2-user@ec2-52-201-237-93.com
 `<<CHANGED>><f+++++++++ x.x`\
 `<<CHANGED>><f+++++++++ y.y`
 
-The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user@aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in ----rsh='ssh...' and ----out-format='<<CHANGED>>%i %n%L'.
+The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user\@aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in ----rsh='ssh...' and ----out-format='<<CHANGED>>%i %n%L'.
 
 We just switch the last two parameters in order to retrieve the files from host endpoint (aakrhel005.yellowykt.com) to the local server as follows:
 
