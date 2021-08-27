@@ -157,7 +157,7 @@ Ethernet adapter Ethernet0:
 
 **Source code for windowstest_with_tunnel.py**
 
-```
+``` python
 from winrm.protocol import Protocol
 import argparse
 
@@ -210,7 +210,7 @@ b'#< CLIXML\r\n<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/power
 
 **Source code for windowstest_with_tunnel2.py**
 
-```
+``` python
 from winrm.protocol import Protocol
 import winrm
 import argparse
@@ -440,7 +440,7 @@ The source code for the [windowstest_with_tunnel.yaml](https://github.com/thinka
 
 **windowstest_with_tunnel.yaml**
 
-```
+``` yaml
 - name: Role ensures that the socks tunnel is setup
   hosts: localhost
   connection: local
@@ -481,7 +481,7 @@ The source code for the role [ansible-role-socks5-tunnel-nopassphrase](https://g
 
 **tasks/main.yml**
 
-```
+``` yaml
 ---
 - name: Creating socks tunnel without passphrase for single jumphost
   block:
@@ -528,7 +528,7 @@ The source code for the role [ansible-role-socks5-tunnel-nopassphrase](https://g
 
 The [vars/main.yml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/vars/main.yml) is shown below. This looks up the environment variables for the JH*_SSH_PRIVATE_KEY and JH*_SSH_PRIVATE_KEY_PASSPHRASE and converts them to playbook variables jh*_ssh_private_key and jh*_ssh_private_key_passphrase respectively for each of the jumphosts.
 
-```
+``` yaml
 ---
 jh_ssh_private_key: "{{ lookup('env','JH_SSH_PRIVATE_KEY') }}"
 jh_ssh_private_key_passphrase: "{{ lookup('env', 'JH_SSH_PRIVATE_KEY_PASSPHRASE') or '' }}"
@@ -566,7 +566,7 @@ The job template that invokes the same tunnel role as before (ansible-role-socks
 
 Source code for the hello_with_tunnel.yaml
 
-```
+``` yaml
 ---
 - name: Role ensures that the socks tunnel is setup
   hosts: localhost
