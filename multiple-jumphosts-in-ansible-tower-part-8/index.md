@@ -378,7 +378,7 @@ The output of the job run with the rsync command is shown in screenshot below:
 
 ![](images/Screen-Shot-2020-07-28-at-5.18.40-AM.png)
 
-The --rsh shows it using the single jumphost hop "ec2-user\@ec2-52-201-237-93.compute-1.amazonaws.com". Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
+The --rsh shows it using the single jumphost hop ec2-user&#64;ec2-52-201-237-93.compute-1.amazonaws.com. Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
 
 ``bash-4.2$ eval `ssh-agent` ``\
 `Agent pid 1734`\
@@ -397,7 +397,7 @@ The --rsh shows it using the single jumphost hop "ec2-user\@ec2-52-201-237-93.co
 `<<CHANGED>><f+++++++++ x.x`\
 `<<CHANGED>><f+++++++++ y.y`
 
-The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user\@aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in --rsh='ssh...' and --out-format='<<CHANGED>>%i %n%L'.
+The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user&#64;aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in --rsh='ssh...' and --out-format='<<CHANGED>>%i %n%L'.
 
 We just switch the last two parameters in order to retrieve the files from host endpoint (aakrhel005.yellowykt.com) to the local server as follows:
 
