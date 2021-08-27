@@ -26,7 +26,7 @@ Ansible Tower/AWX
 
 #### 1. Introduction
 
-Part 6 covered the use of the primary path and the secondary/backup path to establish connectivity to the host endpoints. If the primary path is unable to connect to the host endpoint, either because one or more jumphosts in the primary path is dead or unreachable, then we tried the backup jumphosts path to connect to the host endpoint. The number of hops in primary and secondary paths could be different. In many circumstances however, we don't want to try an entirely new path.
+[Part 6](../multiple-jumphosts-in-ansible-tower-part-6/ "Multiple Jumphosts in Ansible Tower -- Part 6") covered the use of the primary path and the secondary/backup path to establish connectivity to the host endpoints. If the primary path is unable to connect to the host endpoint, either because one or more jumphosts in the primary path is dead or unreachable, then we tried the backup jumphosts path to connect to the host endpoint. The number of hops in primary and secondary paths could be different. In many circumstances however, we don't want to try an entirely new path.
 
 Instead, we want multiple jumphosts at each hop level to allow for high availability. The multiple jumphosts at each hop may be used distribute load or act as redundant jumphosts to provide failover capability. An alternative mechanism to entirely different paths is to define multiple hosts at each hop level in a single credential type as (jh1_1, jh1_2, jh1_3...) for jh1 first hop, (jh2_1,jh2_2,...) for jh2 second hop, ... where each hop may have a different number of usable jumphosts indicated after the underscore character. If any jumphost is down, it can retry with different hosts at same hop level and so on adding the next hop until one of the full paths is successful. In this Part 7, we explore this latter mechanism and demonstrate its use in Ansible Tower by extending the use of the same credential types we created previously.
 
@@ -788,7 +788,7 @@ These numbers will vary based on the system settings and buffers, the time the s
 
 In Part 7, we looked at extending the use of the custom jumphost credential types to multiple jumphosts at each hop level to allow for high availability or load distribution. Finally we looked into the tuning of system parameters and ssh settings to support large number of simultaneous ssh connections and also got ballpark figures for the memory usage requirements.
 
-In the next Part 8, we will look into the problems with the synchronize module and using rsync over multiple jumphost hops.
+In the next [Part 8](../multiple-jumphosts-in-ansible-tower-part-8/ "Multiple Jumphosts in Ansible Tower -- Part 8"), we will look into the problems with the synchronize module and using rsync over multiple jumphost hops.
 
 #### 9. References
 - Linux TCP Tuning <http://www.linux-admins.net/2010/09/linux-tcp-tuning.html>
