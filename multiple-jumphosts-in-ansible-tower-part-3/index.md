@@ -349,7 +349,7 @@ aakwin2012-1.yellowykt.com : ok=6    changed=3    unreachable=0    failed=0    s
 
 **Source code for playbook windowstest.yaml**
 
-```
+``` yaml
 - hosts: all
   gather_facts: no
   tasks:
@@ -391,7 +391,7 @@ The playbook [windowstest_with_tunnel_passphrase.yaml](https://github.com/thinka
 
 **windowstest_with_tunnel_passphrase.yaml**
 
-```
+``` yaml
 ---
 - name: Role ensures that the socks tunnel is setup, the ssh keys may have a passphrase
   hosts: localhost
@@ -459,7 +459,7 @@ We run the playbook [hello_with_tunnel_passphrase.yaml](https://github.com/think
 
 **hello_with_tunnel_passphrase.yaml**
 
-```
+``` yaml
 ---
 - name: Role ensures that the socks tunnel is setup with optional passphrase
   hosts: localhost
