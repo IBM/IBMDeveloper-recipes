@@ -62,7 +62,7 @@ We can test with ansible or ansible-playbook. The ansible_ssh_common_args parame
 
 We can run a playbook that defines "hosts: all" on a single host by specifying "-i aakrhel001,". This works even if the target host endpoint is not defined in your inventory. In 2a, we will test with ansible command by directly calling the shell module. We will run the hello.yaml playbook in 2b and 2c on the endpoint host aakrhel001 via the jumphost ec2-52-201-237-93.compute-1.amazonaws.com with the following [hello.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello.yaml "hello.yaml") playbook:
 
-```
+``` yaml
 ---
 - hosts: all
   gather_facts: no
@@ -118,7 +118,7 @@ The {{ jh_ssh_user }} and {{ jh_ip }} will also be provided from a custom jumpho
 Under Administration -> Credential Types create a new **jumphost_credential_type** with:
 
 **INPUT CONFIGURATION**
-```
+``` yaml
 fields:
   - id: jh_ip
     type: string
@@ -151,7 +151,7 @@ required:
 ```
 
 **INJECTOR CONFIGURATION**
-```
+``` yaml
 env:
   JH_SSH_PRIVATE_KEY: '{{tower.filename.jh_ssh_private_key}}'
   JH_SSH_PRIVATE_KEY_PASSPHRASE: '{{ jh_ssh_private_key_passphrase }}'
@@ -313,7 +313,7 @@ On multiple occasions, we need to execute commands on the jumphost. This [run_on
 
 **run_on_jumphost.yaml**
 
-```
+``` yaml
 ---
 - hosts: localhost
   gather_facts: no
