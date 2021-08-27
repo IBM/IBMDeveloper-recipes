@@ -326,7 +326,7 @@ We may be tempted to add the above ssh chained command after --rsh= in double qu
 
 `--rsh=ssh -o Port={{ jh1_ssh_port }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -A {{ jh1_ssh_user }}@{{ jh1_ip }} ssh -o Port={{ jh2_ssh_port }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -A {{ jh2_ssh_user }}@{{ jh2_ip }} ssh -o Port={{ jh3_ssh_port }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -A {{ jh3_ssh_user }}@{{ jh3_ip }} ssh -o Port={{ jh4_ssh_port }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -A {{ jh4_ssh_user }}@{{ jh4_ip }} ssh -o Port={{ jh5_ssh_port }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -A {{ jh5_ssh_user }}@{{ jh5_ip }} ssh -q -oPort={{ my_port }} -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null`
 
-This is shown in [synchronize_with_ssh_chaining.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml "synchronize_with_ssh_chaining.yaml ") playbook where it first does an [rsync using the synchronize module with ssh chaining](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml#L20-L29 "rsync using the synchronize module with ssh chaining") and then invokes the [hello `hostname`](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml#L31-L35 "hello `hostname`") using the ansible_ssh_common_args computed in the role.
+This is shown in [synchronize_with_ssh_chaining.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml "synchronize_with_ssh_chaining.yaml ") playbook where it first does an [rsync using the synchronize module with ssh chaining](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml#L20-L29 "rsync using the synchronize module with ssh chaining") and then invokes the [hello \`hostname\`](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize_with_ssh_chaining.yaml#L31-L35 "hello `hostname`") using the ansible_ssh_common_args computed in the role.
 
 The job template "synchronize_ssh_chain" shows the single jumphost credential yellowzone_1jumphost_credential_passphrase" and the machine credential "aakrhel005_ec2-user_machine_credential_passphrase" both with passphrases passed to the job template. This job uses the "synchronize_with_ssh_chaining.yaml".
 
@@ -378,7 +378,7 @@ The output of the job run with the rsync command is shown in screenshot below:
 
 ![](images/Screen-Shot-2020-07-28-at-5.18.40-AM.png)
 
-The --rsh shows it using the single jumphost hop ec2-user&#64;ec2-52-201-237-93.compute-1.amazonaws.com. Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
+The --rsh shows it using the single jumphost hop `ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com`. Although the output shows the full "rsync" command executed by the synchronize module with the generated --rsh for the single hop, there is a problem with the printing in the logs. We cannot run the command directly because of [missing quotes](https://github.com/ansible/ansible/issues/46126 "missing quotes in output"). Internally the module however generates the parameters as a list and correctly executes via the exec() family of functions. The --rsh and --out-format quoting are handled transparently by subprocess.Popen when a list is passed to it instead of a string. If you were to execute this manually, it would look as follows:
 
 ``bash-4.2$ eval `ssh-agent` ``\
 `Agent pid 1734`\
@@ -397,7 +397,7 @@ The --rsh shows it using the single jumphost hop ec2-user&#64;ec2-52-201-237-93.
 `<<CHANGED>><f+++++++++ x.x`\
 `<<CHANGED>><f+++++++++ y.y`
 
-The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local /tmp/roles/ directory to ec2-user&#64;aakrhel005.yellowykt.com:/tmp/roles/. Note the single quotes in --rsh='ssh...' and --out-format='<<CHANGED>>%i %n%L'.
+The ssh-agent is started, the key is added to the ssh-agent and the rsync command is executed to send the files from local `/tmp/roles/` directory to `ec2-user@aakrhel005.yellowykt.com:/tmp/roles/`. Note the single quotes in --rsh='ssh...' and --out-format='<<CHANGED>>%i %n%L'.
 
 We just switch the last two parameters in order to retrieve the files from host endpoint (aakrhel005.yellowykt.com) to the local server as follows:
 
