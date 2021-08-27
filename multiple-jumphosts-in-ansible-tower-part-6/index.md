@@ -387,7 +387,7 @@ except Exception, err:
 
 If you have reverse ssh tunnels preestablished to Ansible Tower directly on some port, you can use the ProxyCommand that connects to this port. If instead there are intermediate hops with such preestablished reverse ssh, Ansible Tower can take advantage of those too.
 
-Let's check this with a real example in Tower. The 2 jumphost credential is yellowzone_2jumphost_credential. This has the first jumphost hop ec2-52-201-237-93.compute-1.amazonaws.com and the second aakrhel001.yellowykt.com to previously established reverse tunnel on port 2223 (that takes it to aakrhel002.yellowykt.com the final hop). The socks port that the playbook will use is socks5h://localhost:1235. We could also use the unixsocket instead of the socks port, the role handles both automatically as seen in [Part 5](https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-5/ "Multiple Jumphosts in Ansible Tower -- Part 5").
+Let's check this with a real example in Tower. The 2 jumphost credential is yellowzone_2jumphost_credential. This has the first jumphost hop ec2-52-201-237-93.compute-1.amazonaws.com and the second aakrhel001.yellowykt.com to previously established reverse tunnel on port 2223 (that takes it to aakrhel002.yellowykt.com the final hop). The socks port that the playbook will use is socks5h://localhost:1235. We could also use the unixsocket instead of the socks port, the role handles both automatically as seen in [Part 5](../multiple-jumphosts-in-ansible-tower-part-5/ "Multiple Jumphosts in Ansible Tower -- Part 5").
 
 ![](images/Screen-Shot-2020-07-09-at-5.31.36-PM.png)
 
