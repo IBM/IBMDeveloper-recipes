@@ -8,7 +8,7 @@ Tags: Cloud computing, DevOps, Linux
 
 Published on July 10, 2020 / Updated on July 13, 2020
 
-![](images/Screen-Shot-2020-07-26-at-6.45.57-PM-1024x456.png)
+![](images/Screen-Shot-2020-07-10-at-7.22.39-AM-1024x428.png)
 
 ### Overview
 
