@@ -8,6 +8,8 @@ Tags: Cloud computing, DevOps, Linux
 
 Published on July 5, 2020 / Updated on July 26, 2020
 
+![](images/Screen-Shot-2020-07-05-at-9.26.23-AM-1024x427.png)
+
 ### Overview
 
 Skill Level: Intermediate
