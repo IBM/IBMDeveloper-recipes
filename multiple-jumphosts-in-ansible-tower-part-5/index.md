@@ -1,12 +1,14 @@
 # Multiple Jumphosts in Ansible Tower - Part 5
 
-##  Unix domain socket file instead of socks port
+## Unix domain socket file instead of socks port
 
 [Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
 
 Tags: Cloud computing, DevOps, Linux
 
 Published on July 8, 2020 / Updated on July 23, 2020
+
+![](images/Screen-Shot-2020-07-08-at-10.26.55-AM-1024x356.png)
 
 ### Overview
 
