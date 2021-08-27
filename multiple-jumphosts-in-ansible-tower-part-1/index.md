@@ -75,7 +75,7 @@ We can run a playbook that defines "hosts: all" on a single host by specifying "
 
 **2a. Running a command with ansible using extra-vars to pass the jumphost information**
 
-`ansible -u ec2-user -i "aakrhel001," aakrhel001 -m shell -a "echo Hello \\\`hostname\\\`" --private-key ~/amazontestkey.pem **-e** '{"ansible_ssh_common_args":"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\\""}' -v`
+``ansible -u ec2-user -i "aakrhel001," aakrhel001 -m shell -a "echo Hello \`hostname\`" --private-key ~/amazontestkey.pem -e '{"ansible_ssh_common_args":"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\""}' -v``
 
 **Output:**
 
@@ -85,11 +85,11 @@ Hello aakrhel001
 
 **2b. Ansible playbook using extra-vars to send ansible_ssh_common_args with ProxyCommand**
 
-`ansible-playbook -u root -i "aakrhel001," --private-key ~/amazontestkey.pem hello.yaml **-e** '{"ansible_ssh_common_args":"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\\""}' -v`
+`ansible-playbook -u root -i "aakrhel001," --private-key ~/amazontestkey.pem hello.yaml -e '{"ansible_ssh_common_args":"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\""}' -v`
 
 **2c. Ansible playbook using ssh-common-args to send ProxyCommand**
 
-'ansible-playbook -u root -i "aakrhel001," --private-key ~/amazontestkey.pem helloworld.yaml **--ssh-common-args**  "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\\"" -v'
+`ansible-playbook -u root -i "aakrhel001," --private-key ~/amazontestkey.pem helloworld.yaml --ssh-common-args  "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"ssh -W %h:%p ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -i ~/amazontestkey.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\"" -v`
 
 Output of 2b and 2c from the above commands using ansible-playbook with ProxyCommand:
 
