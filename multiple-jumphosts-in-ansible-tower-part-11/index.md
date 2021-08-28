@@ -44,7 +44,7 @@ In our case, the client is the pod created by Container Groups through Ansible T
 
 We create a new Container group sshuttle_cg. The new **pod spec** with the capabilities looks as follows for the sshuttle_cg.
 
-<img src="images/Screen-Shot-2020-08-23-at-6.57.58-AM.png" width="600">
+<img src="images/Screen-Shot-2020-08-23-at-6.57.58-AM.png" width="800">
 
 You should change the proxied_ip_addresses below for your network. It is required by the runme.sh.
 
