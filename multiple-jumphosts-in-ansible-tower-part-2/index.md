@@ -418,21 +418,21 @@ ansible_port: 5985`
 
 The reason to use "{{ jh1_socks_port if jh1_socks_port is defined else jh_socks_port }}" is to allow defining the socks port in the jumphost credential with the "jh_" or the "jh1_" prefix. This also demonstrates variables using the Jinja2 templating. This is also shown in the screenshot below:
 
-![Screen-Shot-2020-06-29-at-5.06.13-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-5.06.13-PM.png)
+![](images/Screen-Shot-2020-06-29-at-5.06.13-PM.png)
 
 Here is the job template windows_test_job_template for playbook [windowstest_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowstest_with_tunnel.py "windowstest_with_tunnel.yaml"). Both the Windows host machine credential (yellowzone_windows_endpoint_credential) and the required jumphost credential (same jumphost_credential created in the [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1")) are passed. The jumphost credential is used by the first play that invokes the role in the playbook to establish the tunnel and runs on localhost (on Tower celery/task container). The role correctly selects the number of jumps based on the number of hops specified by the credential type. When the next play runs, it uses the tunnel to run the tasks on the Windows endpoint via the tunnel because of the ansible_psrp_proxy that connect to the socks5h://localhost:{{ jh_socks_port }}. The tunnel runs in an Isolated Job and automatically gets destroyed when the Ansible Tower job finishes.
 
 Older versions of Tower (3.5.3) were able to persist the tunnel across multiple jobs. But now with Tower Version 3.6.x, with Isolated Jobs (bubblewrap) enabled, any processes started in background are killed at end of the job. So we cannot persist the Socks tunnel using roles. The tunnel must be established for every job.
 
 Do not pass multiple jumphost credentials of different types. Only one machine credential and one jumphost credential should be passed to the job template. Additional credentials (for example Tower credential, etc. can be passed, but only one of each type).\
- ![Screen-Shot-2020-07-01-at-7.38.51-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.38.51-AM.png)
+ ![](images/Screen-Shot-2020-07-01-at-7.38.51-AM.png)
 
 We ran the job against the LIMIT: "win2012-1* localhost". The localhost is required to establish the tunnel. The output of the job run is as follows. It will use the correct task from the role to establish the tunnel. For example, in this case with **single jumphost**:
 
 `TASK [ansible-role-socks5-tunnel-nopassphrase : Creating socks tunnel without passphrase for single jumphost] ***\
 task path: /tmp/awx_12514_77i2qfqs/project/Jumphosts/roles/ansible-role-socks5-tunnel-nopassphrase/tasks/main.yml:4`
 
-![Screen-Shot-2020-07-01-at-7.42.01-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-01-at-7.42.01-AM.png)
+![](images/Screen-Shot-2020-07-01-at-7.42.01-AM.png)
 
 The screenshot above shows the commands from the playbook being executed successfully.
 
@@ -552,7 +552,7 @@ jh6_ssh_private_key_passphrase: "{{ lookup('env', 'JH6_SSH_PRIVATE_KEY_PASSPHRAS
 
 Shown below is the hostname aakrhel005.yellowykt.com in the yellowzone inventory with the ansible_port: 2222
 
-![Screen-Shot-2020-06-29-at-6.18.58-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.58-PM.png)
+![](images/Screen-Shot-2020-06-29-at-6.18.58-PM.png)
 
 In the host variables, this host has been configured to use the **connect-proxy** for ProxyCommand in the ansible_ssh_common_args (instead of the ssh that was used in [Part 1](../multiple-jumphosts-in-ansible-tower-part-1/index.md "Multiple Jumphosts in Ansible Tower - Part 1") -- The rest of the ansible_ssh_common_args are commented out). Either the "connect-proxy" or the "ncat --proxy-type socks5" or the "socat" shown below will work on Linux with the tunnel. Your Tower image needs to have the connect-proxy and ncat installed. Instructions to create a custom Tower Image for a podified install will be shown in [Part 5](../multiple-jumphosts-in-ansible-tower-part-5/index.md "Multiple Jumphosts in Ansible Tower - Part 5").
 
@@ -564,7 +564,7 @@ In the host variables, this host has been configured to use the **connect-proxy*
 
 The job template that invokes the same tunnel role as before (ansible-role-socks5-tunnel-nopassphrase that was used for the windows job template) is shown below. Two credentials: the jumphost credential and the Linux endpoint credential are passed as shown in Part 1. However the difference this time is that it uses the [hello_with_tunnel.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_tunnel.yaml) that invokes the role in its first play to establish the tunnel and in the second play runs the hostname using the shell module on the linux host. This second play uses the tunnel that was already established in the first play. The tunnel automatically gets terminated when the job completes because the ENABLE ISOLATED JOBS is enabled.
 
-![Screen-Shot-2020-06-29-at-6.18.06-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.18.06-PM.png)
+![](images/Screen-Shot-2020-06-29-at-6.18.06-PM.png)
 
 Source code for the hello_with_tunnel.yaml
 
@@ -586,7 +586,7 @@ Source code for the hello_with_tunnel.yaml
 
 The job run shows the output where "ProxyCommand=connect-proxy -S 127.0.0.1:1235 %h %p" (that we selected in the host variables) is used to establish the tunnel. It outputs the hostname aakrhel005 by connecting to the host on port 2222.
 
-![Screen-Shot-2020-06-29-at-6.17.32-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-06-29-at-6.17.32-PM.png)
+![](images/Screen-Shot-2020-06-29-at-6.17.32-PM.png)
 
 A final thing to note before ending this section is about using [ad-hoc commands](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html "ad-hoc commands"). In Ansible Tower, the "RUN COMMAND" only allow passing a Machine credential. Therefore, you cannot test running a module against a host directly when it needs to connect through one or more jumphosts because there is no direct connectivity to the endpoint host. Specifically, you cannot pass the Jumphost Credentials and the ssh key cannot be passed with extra vars.
 
