@@ -313,7 +313,7 @@ print(http_response.split("\\r\\n\\r\\n")[1]) # body
 ```
 This will retrieve the credentials from the remote vault over the tunnel and print them.
 
-If we were to create the tunnel that uses the unix socket file /tmp/mysock.sock (instead of the socket port) to connect to the jumphost ec2-52-201-237-93.compute-1.amazonaws.com as follows, we can uncomment the **Option 2** from above. Note that this requires the modified python urllib3 and PySocks as was shown previously in [Part 5](..//multiple-jumphosts-in-ansible-tower-part-5/ "Multiple Jumphosts in Ansible Tower - Part 5").
+If we were to create the tunnel that uses the unix socket file /tmp/mysock.sock (instead of the socket port) to connect to the jumphost ec2-52-201-237-93.compute-1.amazonaws.com as follows, we can uncomment the **Option 2** from above. Note that this requires the modified python urllib3 and PySocks as was shown previously in [Part 5](../multiple-jumphosts-in-ansible-tower-part-5/index.md "Multiple Jumphosts in Ansible Tower - Part 5").
 
 `ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -CfNq -D /tmp/mysock.sock -p 22 -i ~/amazontestkey.pem ec2-user@ec2-52-201-237-93.compute-1.amazonaws.com -v`
 
@@ -608,7 +608,7 @@ The first two target host endpoints: aakrhel001 and the aakrhel002 require that 
 
 `ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p {{ jh1_ssh_user if jh1_ssh_user is defined else jh_ssh_user }}@{{ jh1_ip if jh1_ip is defined else jh_ip }} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"'`
 
-The following ansible_ssh_common_args is set to use 5 hops for connecting to aakrhel001. This mechanism to use alternating single and double quotes instead of backslashes to escape the double quotes was shown in last [Part 8](..//multiple-jumphosts-in-ansible-tower-part-8/ "Multiple Jumphosts in Ansible Tower - Part 8") when we used rsync in the file [synchronize.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize.yaml "synchronize.yaml")
+The following ansible_ssh_common_args is set to use 5 hops for connecting to aakrhel001. This mechanism to use alternating single and double quotes instead of backslashes to escape the double quotes was shown in last [Part 8](../multiple-jumphosts-in-ansible-tower-part-8/index.md "Multiple Jumphosts in Ansible Tower - Part 8") when we used rsync in the file [synchronize.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/synchronize.yaml "synchronize.yaml")
 
 Either of these escape mechanisms will work for nested ProxyCommand for ssh.
 
@@ -1110,7 +1110,7 @@ This section showed how to retrieve credentials from Conjur over multiple jumpho
 
 #### 9. Conclusion
 
-In Part 9, we saw how to access a vault over multiple jumphost hops to retrieve host endpoint credentials with curl, python code and lookup plugins from Ansible. We further added these retrieved ssh keys to the ssh-agent and connected to the target host endpoints. We can store other cloud credentials (for example, Amazon Web Services requires access keys and secret keys) or vCenter credentials in the vault. We can retrieve and use these credentials to run delegated playbooks or shell commands or web requests (REST API) on an endpoint or jumphost that has access to the APIs over multiple jumphost hops. In [Part 10](..//multiple-jumphosts-in-ansible-tower-part-10 "Multiple Jumphosts in Ansible Tower - Part 10"), we will use customized ansible-runner images with Container Groups.
+In Part 9, we saw how to access a vault over multiple jumphost hops to retrieve host endpoint credentials with curl, python code and lookup plugins from Ansible. We further added these retrieved ssh keys to the ssh-agent and connected to the target host endpoints. We can store other cloud credentials (for example, Amazon Web Services requires access keys and secret keys) or vCenter credentials in the vault. We can retrieve and use these credentials to run delegated playbooks or shell commands or web requests (REST API) on an endpoint or jumphost that has access to the APIs over multiple jumphost hops. In [Part 10](../multiple-jumphosts-in-ansible-tower-part-10/index.md "Multiple Jumphosts in Ansible Tower - Part 10"), we will use customized ansible-runner images with Container Groups.
 
 Hope you have enjoyed the article. Share your thoughts in the comments or engage in the conversation with me on Twitter @aakarve. I look forward to hearing about which vaults and plugins you use to retrieve credentials using Ansible and if you would like to see something covered in more detail.
 
