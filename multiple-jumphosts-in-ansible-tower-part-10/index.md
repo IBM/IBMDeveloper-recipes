@@ -595,7 +595,7 @@ The playbook can therefore use the ansible_ssh_common_args by setting the Identi
 
 Since we do not need to pass in any jumphost credentials, now we can run [Ad Hoc commands](https://docs.ansible.com/ansible-tower/latest/html/userguide/inventories.html#running-ad-hoc-commands "Ad Hoc commands"). This was not possible with previous approaches with multiple jumphosts. These commands result in starting a pod for the job exactly the same as in the case of a job template. Since the inventory is set to use the container_group_1, it will use the 5 jumphosts to connect to the endpoints. The screenshot below shows selecting the windows group and running the ansible module win_command with argument whoami.
 
-![](images/Screen-Shot-2020-08-17-at-3.49.09-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-3.49.09-PM.png" width="800">
 
 The output shows that it ran successfully on the container group set in the inventory.
 
