@@ -44,7 +44,7 @@ In our case, the client is the pod created by Container Groups through Ansible T
 
 We create a new Container group sshuttle_cg. The new **pod spec** with the capabilities looks as follows for the sshuttle_cg.
 
-![](images/Screen-Shot-2020-08-23-at-6.57.58-AM.png)
+<img src="images/Screen-Shot-2020-08-23-at-6.57.58-AM.png" width="600">
 
 You should change the proxied_ip_addresses below for your network. It is required by the runme.sh.
 
@@ -482,9 +482,9 @@ There are other alternatives that you can possibly use: [proxychains-ng](https:/
 - Replace bubblewrap-based task execution in AWX with container-based execution <https://github.com/ansible/awx/issues/7060>
 - Using Runner as a standalone command line tool <https://ansible-runner.readthedocs.io/en/stable/standalone.html#using-runner-as-a-standalone-command-line-tool>
 - Go beyond with automation: ansible-runner <https://swapps.com/blog/go-beyond-with-automation-ansible-runner/>
-- Multiple Jumphosts in Ansible Tower -- Part 1: Connecting to Linux hosts using ssh with nested ProxyCommand <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1>
-- Multiple Jumphosts in Ansible Tower -- Part 2: Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-2>
-- Multiple Jumphosts in Ansible Tower -- Part 3: Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-3>
+- Multiple Jumphosts in Ansible Tower -- Part 1: Connecting to Linux hosts using ssh with nested ProxyCommand <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1/>
+- Multiple Jumphosts in Ansible Tower -- Part 2: Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-2/>
+- Multiple Jumphosts in Ansible Tower -- Part 3: Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-3/>
 - Multiple Jumphosts in Ansible Tower -- Part 4: Multi jumphost connections to Linux hosts using ssh-add to add keys to ssh-agent <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-4/>
 - Multiple Jumphosts in Ansible Tower -- Part 5: Unix domain socket file instead of socks port <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-5/>
 - Multiple Jumphosts in Ansible Tower -- Part 6: Primary and Secondary/Backup Jumphosts and Reverse ssh Tunnel <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-6/>
