@@ -403,7 +403,7 @@ This section showed how to take advantage of the preestablished reverse ssh tunn
 
 #### 6. Conclusion
 
-Part 6 described multiple mechanisms to use backup jumphosts. It also demonstrated the mechanism to use the backup path if the main path for the jumphosts fails. We also covered the use of reverse ssh tunnels from Ansible Tower. This concludes the 6 part series on "Multiple Jumphosts in Ansible Tower". Hope you have enjoyed the article. Share your thoughts in the comments or engage in the conversation with me on Twitter @aakarve. I look forward to hearing about how you take advantage of multiple jumphosts and if you would like to see something covered in more detail.
+Part 6 described multiple mechanisms to use backup jumphosts. It also demonstrated the mechanism to use the backup path if the main path for the jumphosts fails. We also covered the use of reverse ssh tunnels from Ansible Tower. In [Part 7](../multiple-jumphosts-in-ansible-tower-part-7/index.md "Multiple Jumphosts in Ansible Tower - Part 7"), we will cover the failover using redundant jumphosts and tweak ssh parameters for jumphosts. Hope you have enjoyed the article. Share your thoughts in the comments or engage in the conversation with me on Twitter @aakarve. I look forward to hearing about how you take advantage of multiple jumphosts and if you would like to see something covered in more detail.
 
 #### 7. References
 - Selecting Interface for SSH Port Forwarding <https://serverfault.com/questions/379344/selecting-interface-for-ssh-port-forwarding>
