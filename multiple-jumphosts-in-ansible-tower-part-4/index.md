@@ -361,7 +361,7 @@ The complete "tasks/main.yml" is shown below:
 
 A sample template "hello_job_template_sshadd_passphrase" in Ansible Tower is shown below that uses the hello_with_sshadd_passphrase.yaml playbook. The two credentials are: the custom jumphost credential yellowzone_5jumphost_credential_passphrase and the machine credential aakrhel005_ec2-user_machine_credential_passphrase.
 
-![Screen-Shot-2020-07-02-at-11.21.28-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-11.21.28-AM.png)
+![](images/Screen-Shot-2020-07-02-at-11.21.28-AM.png)
 
 The playbook [hello_with_sshadd_passphrase.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml) is as follows:
 
@@ -414,7 +414,7 @@ The playbook [hello_with_sshadd_passphrase.yaml](https://github.com/thinkahead/D
 
 The output from the job run shows the ssh_add in the image below:
 
-![Screen-Shot-2020-07-02-at-11.20.55-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-11.20.55-AM.png)
+![](images/Screen-Shot-2020-07-02-at-11.20.55-AM.png)
 
 This [hello_with_sshadd_passphrase.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml "hello_with_sshadd_passphrase.yaml") has the [first play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L2,L15 "Start ssh-agent and Retrieve the SSH_AUTH_SOCK and SSH_AGENT_PID environment variables") running on localhost that [starts the ssh-agent](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L8 "starts the ssh-agent") and retrieves the two environment variables (env_vars) for the ssh-agent: SSH_AUTH_SOCK and SSH_AGENT_PID. These env_vars are used in the [second play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L17,L23 "Role ensures that the socks tunnel is setup") that runs on localhost to include the role [ansible-role-ssh-add-jumphosts](https://github.com/thinkahead/DeveloperRecipes/tree/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts). In this role, the expect script provides the passphrase at the prompts for the ssh_add for the jumphost ssh keys. The [main.yml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts/tasks/main.yml "main.yml") also computes the ansible_ssh_common_args containing the multiple ProxyCommand. In the [third play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L25,L33 "echo Hello `hostname`"), the task to "echo Hello" runs on the host endpoints. This task sets the vars ansible_ssh_common_args: "{{ hostvars['127.0.0.1']['ansible_ssh_common_args'] }}". **You should remove any ansible_ssh_common_args set in host/group/inventory variables in Ansible Tower because we want to use this variable from the playbook.** In previous Part 1, Part 2, and Part 3 we used variables that were set at either the inventory, group, or host level. In this Part 4, we used variables in the playbook at the play level by generating them in a previous play. Since the set_fact 'ansible_ssh_common_args' was done on a play running on localhost, the next play retrieves it as hostvars['127.0.0.1']['ansible_ssh_common_args']. The [final play](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L35,L44 "Kill the ssh-agent SSH_AGENT_PID") runs again on localhost and kills the ssh-agent process using the env_vars by calling the "ssh-agent -k".
 
@@ -489,7 +489,7 @@ file:
   template.endpoint_ssh_private_key: '{{ endpoint_ssh_private_key }}'
 ```
 
-![Screen-Shot-2020-07-02-at-3.07.44-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-3.07.44-PM.png)
+<img src="images/Screen-Shot-2020-07-02-at-3.07.44-PM.png" width="400">
 
 To handle the "Custom Endpoint Credential Type", the [hello_with_sshadd_passphrase_endpointcred.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase_endpointcred.yaml#L37 "file: include_endpointcred.yaml") playbook includes the [include_endpointcred.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/include_endpointcred.yaml#L2-L4 "include_endpointcred.yaml") to set the ansible parameters to connect to the host:
 
@@ -517,45 +517,45 @@ The task with the [include_vars](https://github.com/thinkahead/DeveloperRecipes/
 
 To test this, we create a separate credential from our custom credential type "endpoint_credential_type" (with a passphrase) as shown below.
 
-![Screen-Shot-2020-07-02-at-3.28.40-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-3.28.40-PM.png)
+![](Screen-Shot-2020-07-02-at-3.28.40-PM.png)
 
 We create a new template "hello_job_template_sshadd_passphrase_endpointcred" that can be run with either a Machine Credential or a [Custom Endpoint Credential.](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/EndpointCredential.md "Custom Endpoint Credential") The template shows the [playbook hello_with_sshadd_passphrase_endpointcred.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase_endpointcred.yaml) and the two credentials: yellowzone_5jumphost_credential_passphrase (Custom Jumphost Credential) and the aakrhel005_custom_endpoint_credential_passphrase (Custom Endpoint credential with passphrase).
 
-![Screen-Shot-2020-07-02-at-3.31.25-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-3.31.25-PM.png)
+![](images/Screen-Shot-2020-07-02-at-3.31.25-PM.png)
 
 Two outputs are shown below: 5a. Custom Endpoint Credential and 5b. Machine Credential.
 
 **5a. Custom Endpoint Credential** -- The output with the endpoint credential "aakrhel005_custom_endpoint_credential_passphrase" shows the passphrase for this endpoint credential is now added to ssh-agent when prompted by ssh-add by the expect script shown previously. Notice the -oIdentityAgent being passed at the top level so that it can use the ssh-agent we started in the first play.
 
-![Screen-Shot-2020-07-02-at-3.39.01-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-3.39.01-PM.png)
+![](images/Screen-Shot-2020-07-02-at-3.39.01-PM.png)
 
 **5b. Machine Credential** -- The output with the Machine Credential "aakrhel005_ec2-user_machine_credential_passphrase" passed in instead of the endpoint credential for same job template does not use the -oIdentityAgent in the ssh command at the top level. Instead, Ansible Tower uses the default ssh-agent that was started by Tower for this Job and Tower pexpect provides the passphrase when prompted. The output below only has the -oIdentityAgent inside the ProxyCommand.
 
-![Screen-Shot-2020-07-02-at-3.38.18-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-02-at-3.38.18-PM.png)
+![](images/Screen-Shot-2020-07-02-at-3.38.18-PM.png)
 
 #### 6. Separate credentials for each jumphost hop in the path/chain
 
 In Part 1, we mentioned that we can separate the credentials for each jumphost hop. In this Part 4, we see it in use. Separate credentials have been created for each jumphost hop from new [hop based credential types](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/SeparateCredentials.md "Separate hop based credentials"): jumphost-1_credential_type, jumphost-2_credential_type, jumphost-3_credential_type, jumphost-4_credential_type and jumphost-5_credential_type.
 
-![Screen-Shot-2020-07-16-at-6.24.46-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-16-at-6.24.46-PM.png)
+<img src="images/Screen-Shot-2020-07-16-at-6.24.46-PM.png" width="400">
 
 From each of these types two credentials are created. One without passphrase and another with passphrase called Hop**x**-yellowzone and Hop**x**-yellowzone-passphrase (for **x** from 1 to 5) as shown below.
 
-![Screen-Shot-2020-07-16-at-6.27.34-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-16-at-6.27.34-PM.png)
+<img src="images/Screen-Shot-2020-07-16-at-6.27.34-PM.png" width="400">
 
 The credentails use the following jumphosts: ec2-52-201-237-93.compute-1.amazonaws.com (Hop1) -> aakrhel001 (Hop2) -> aakrhel002 (Hop3) -> aakrhel003 (Hop4) -> aakrhel006 (Hop 5). For the Hop 1, the SOCKS PORT is set to 1234. For the rest of the hops, it is set to "ignored". The Hop 1 Socks port is used by the role [ansible-role-ssh-add-jumphosts](https://github.com/thinkahead/DeveloperRecipes/tree/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts "ansible-role-ssh-add-jumphosts") to set the [ansible_ssh_common_args](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts/tasks/main.yml#L88 "ansible_ssh_common_args") used by the [playbook](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L28 "Setting the ansible_ssh_common_args").
 
 A Job template called LinuxTest is created for the playbook [hello_with_sshadd_passphrase.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml "hello_with_sshadd_passphrase.yaml") to which we pass 5 jumphosts. In the first job run, all the 5 credentails, one for each hop are without passphrase and in the second job run all are with passphrase. We could have also passed a combination of credentials with and without passphrase, one distinct one per hop number. The two screenshots below for the **first job run (without passphrase for the ssh keys)** shows that all the 5 jumphost hops are used by the role. The ssh keys are not prompted for the passphrase by the expect script in the included role [ansible-role-ssh-add-jumphosts](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L23 "include role ansible-role-ssh-add-jumphosts")
 
-![Screen-Shot-2020-07-16-at-5.46.23-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-16-at-5.46.23-PM.png)
+![](images/Screen-Shot-2020-07-16-at-5.46.23-PM.png)
 
 The output below shows that the ssh agent was started but the DONEDONEDONE completed without any passphrase prompts.
 
-![Screen-Shot-2020-07-16-at-6.46.40-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-16-at-6.46.40-PM.png)
+![](images/Screen-Shot-2020-07-16-at-6.46.40-PM.png)
 
 The screenshot below shows the **second job run (with passphrase for ssh keys)** for the separate credentials for each jumphost hop. This shows the Enter passphrase of each of the 5 ssh keys for the respective jumphost hops when the keys are added to the ssh-agent (shows "Identity added").
 
-![Screen-Shot-2020-07-16-at-5.57.59-PM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-16-at-5.57.59-PM.png)
+![](images/Screen-Shot-2020-07-16-at-5.57.59-PM.png)
 
 This Section 6 showed how to use [separate credentials for each hop](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/SeparateCredentials.md "separate credentials for each hop"). Each hop credential can be created by a separate user. This separate per hop credential approach makes it easy to mix and match the credentials and avoids repetition of the hop credentials in the path if the hops are reused (in the approach that combines [all hops in a single credential](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/Credentials.md "all hops in a single credential")).
 
@@ -565,17 +565,17 @@ In previous sections, we looked at the role [ansible-role-ssh-add-jumphosts](htt
 
 The three credentials that are passed are shown in the job template screensot below:
 
-![Screen-Shot-2020-07-13-at-9.12.44-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-13-at-9.12.44-AM.png)
+![](images/Screen-Shot-2020-07-13-at-9.12.44-AM.png)
 
 The aakrhel005_custom_endpoint_credential_passphrase is the Custom Endpoint credential for the Linux host aakrhel005. The yellowzone_windows_endpoint_credential is the Machine Credential used for the Windows hosts aakwin2012-1 and aakwin2016-1. The yellowzone_5jumphost_credential_passphrase is the credential for the custom jumphost credential type "jumphost_credential_5hops". The LIMIT shows that we will be running this on the two Windows hosts, the Linux host as well as localhost. It uses the playbook [windowslinuxtest_sshadd_tunnel_passphrase.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/windowslinuxtest_sshadd_tunnel_passphrase.yaml "windowslinuxtest_sshadd_tunnel_passphrase.yaml").
 
 The screenshot below shows that the output of the job run that created the tunnel for the 5 jumphosts (skipping the previous 4 socks tunnel creation commands for the lower number of jumphost hops) and it did not prompt for the passphrase for any of the ssh keys in the jumphost credential.
 
-![Screen-Shot-2020-07-13-at-9.11.54-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-13-at-9.11.54-AM.png)
+![](images/Screen-Shot-2020-07-13-at-9.11.54-AM.png)
 
 The next screenshot below shows the output of the same job run that shows that it successfully executed on the three hosts:
 
-![Screen-Shot-2020-07-13-at-9.38.16-AM](https://developer.ibm.com/recipes/wp-content/uploads/sites/41/2020/07/Screen-Shot-2020-07-13-at-9.38.16-AM.png)
+![](images/Screen-Shot-2020-07-13-at-9.38.16-AM.png)
 
 This section showed how to use the ssh keys added to ssh-agent in the tunnel to connect to Windows hosts. It also showed how to run plays on Windows and Linux hosts in same job by using the [Machine Credential](https://docs.ansible.com/ansible-tower/latest/html/userguide/credentials.html#machine "Ansible Tower Machine Credential") and a [Custom Endpoint Credential](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/EndpointCredential.md "Custom Endpoint Credential Type").
 
