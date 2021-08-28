@@ -306,7 +306,7 @@ The jh_socks_port from the jumphost credential type created in [Part 1](../multi
 
 The host variables for host aakwin2016-1.yellowykt.com are shown in screenshot below:
 
-![](images/Screen-Shot-2020-07-06-at-5.44.13-PM.png)
+<img src="images/Screen-Shot-2020-07-06-at-5.44.13-PM.png" width="600">
 
 The job template "windows_test_job_template_passphrase" looks as follows:
 
