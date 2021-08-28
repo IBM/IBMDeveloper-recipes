@@ -190,7 +190,7 @@ file:
   template.bjh_ssh_private_key: '{{ bjh_ssh_private_key }}'
 ```
 
-<img src="images/Screen-Shot-2020-07-08-at-6.44.56-PM.png" width="600">
+<img src="images/Screen-Shot-2020-07-08-at-6.44.56-PM.png" width="800">
 
 Although this test will be performed with a credential created from the above credential type for a single hop backup jumphost, we can just as easily create multiple hop backup jumphost credential types. The two jumphost credentials we will be passing to the template are shown below. The first is the primary credential that will connect to the jumphost ec2-52-201-237-93.compute-1.amazonaws.com on port 22.
 
