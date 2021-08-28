@@ -116,11 +116,11 @@ Connect to docker container ip address that was ouput with the docker inspect co
 
 Click on Enable new engine and create "testkv" as shown in screenshot below.
 
-![](images/Screen-Shot-2020-08-03-at-8.58.47-AM.png)
+<img src="images/Screen-Shot-2020-08-03-at-8.58.47-AM.png" width="800">
 
 Click on Enable Engine to see the testkv get created.
 
-![](images/Screen-Shot-2020-08-02-at-12.32.59-PM.png)
+<img src="images/Screen-Shot-2020-08-02-at-12.32.59-PM.png" width="800">
 
 This showed how to connect to the vault using a browser over the tunnel. Next we will call the curl commands from python to write credentials to the testkv.
 
@@ -199,11 +199,11 @@ Run the python code:
 
 This will create the credentials in the vault as shown in screenshot below that you can see in your browser.
 
-![](images/Screen-Shot-2020-08-03-at-9.16.37-AM.png)
+<img src="images/Screen-Shot-2020-08-03-at-9.16.37-AM.png" width="800">
 
 Specifically, the secret for aakrhel001 looks as follows:
 
-![](images/Screen-Shot-2020-08-02-at-12.31.30-PM.png)
+<img src="images/Screen-Shot-2020-08-02-at-12.31.30-PM.png" width="800">
 
 **Retrieving the credential**
 
