@@ -489,7 +489,7 @@ file:
   template.endpoint_ssh_private_key: '{{ endpoint_ssh_private_key }}'
 ```
 
-<img src="images/Screen-Shot-2020-07-02-at-3.07.44-PM.png" width="400">
+<img src="images/Screen-Shot-2020-07-02-at-3.07.44-PM.png" width="600">
 
 To handle the "Custom Endpoint Credential Type", the [hello_with_sshadd_passphrase_endpointcred.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase_endpointcred.yaml#L37 "file: include_endpointcred.yaml") playbook includes the [include_endpointcred.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/include_endpointcred.yaml#L2-L4 "include_endpointcred.yaml") to set the ansible parameters to connect to the host:
 
@@ -537,11 +537,11 @@ Two outputs are shown below: 5a. Custom Endpoint Credential and 5b. Machine Cred
 
 In Part 1, we mentioned that we can separate the credentials for each jumphost hop. In this Part 4, we see it in use. Separate credentials have been created for each jumphost hop from new [hop based credential types](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/SeparateCredentials.md "Separate hop based credentials"): jumphost-1_credential_type, jumphost-2_credential_type, jumphost-3_credential_type, jumphost-4_credential_type and jumphost-5_credential_type.
 
-<img src="images/Screen-Shot-2020-07-16-at-6.24.46-PM.png" width="400">
+<img src="images/Screen-Shot-2020-07-16-at-6.24.46-PM.png" width="600">
 
 From each of these types two credentials are created. One without passphrase and another with passphrase called Hop**x**-yellowzone and Hop**x**-yellowzone-passphrase (for **x** from 1 to 5) as shown below.
 
-<img src="images/Screen-Shot-2020-07-16-at-6.27.34-PM.png" width="400">
+<img src="images/Screen-Shot-2020-07-16-at-6.27.34-PM.png" width="600">
 
 The credentails use the following jumphosts: ec2-52-201-237-93.compute-1.amazonaws.com (Hop1) -> aakrhel001 (Hop2) -> aakrhel002 (Hop3) -> aakrhel003 (Hop4) -> aakrhel006 (Hop 5). For the Hop 1, the SOCKS PORT is set to 1234. For the rest of the hops, it is set to "ignored". The Hop 1 Socks port is used by the role [ansible-role-ssh-add-jumphosts](https://github.com/thinkahead/DeveloperRecipes/tree/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts "ansible-role-ssh-add-jumphosts") to set the [ansible_ssh_common_args](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/roles/ansible-role-ssh-add-jumphosts/tasks/main.yml#L88 "ansible_ssh_common_args") used by the [playbook](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/hello_with_sshadd_passphrase.yaml#L28 "Setting the ansible_ssh_common_args").
 
