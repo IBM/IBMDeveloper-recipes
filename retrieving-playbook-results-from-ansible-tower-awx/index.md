@@ -317,9 +317,11 @@ This sample parsetest.yml can be used to retrieve additional output parameter va
 The set_stats module produces output similar to “Print as loop item”. The sample [pwquality2.yml](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality2.yml) that is run as a job in Ansible Tower produces a “Custom Response” using the set_stats module (to keep it different from “Tower Response” produced using set_fact). The [parse_test2.yaml](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/parsetest2.yaml) shows the sample Ansible client code that retrieves the output variables produced by pwquality2.yml from item.event_data.res.ansible_stats.data.tower_response.
 
 Using set_fact with_items that we had previously used, the curl command is as follows to retrieve output from Ansible Tower:
+
 `curl -k -H "Authorization: Bearer <<tower_token>>" "<< tower_api_url >>/api/v2/jobs/<<job_id>>/job_events/?event__contains=runner_item_on_ok&task__contains=Tower%20Response" | jq .results[].event_data.res.results[0].item`
 
 Now with set_stats, we can use a curl command as follows to retrieve output from Ansible Tower:
+
 `curl -k -H "Authorization: Bearer <<tower_token>>" "<< tower_api_url >>/api/v2/jobs/<<job_id>>/job_events/?event__contains=runner_on_ok&task__contains=Custom%20Response" | jq .results[].event_data.res.ansible_stats.data.tower_response`
 
 #### 11. Conclusion
