@@ -497,7 +497,7 @@ Open the URL to acces Ansible Tower and add the license at https://ansible-tower
 
 Part 5 mentioned the advantages of using the Unix domain socket file over the socks port. We saw the changes required to use the Unix domain socket file. Next we saw how to create a custom Tower image with a Dockerfile that installed the required dependencies to get the Unix Socket file to work with Windows. We concluded with instructions for installing Ansible Tower on Openshift using the custom image for the web (kubernetes_web_image) and celery/task (kubernetes_task_image) containers in the pod.
 
-We have seen how to create a tunnel and listen with a socks port and domain socket file. But what happens if one of the jumphosts in the hops in the chain goes down? Can we switch to a backup jumphost? This will be the topic of the final [Part 6](../multiple-jumphosts-in-ansible-tower-part-6/index.md "Multiple Jumphosts in Ansible Tower - Part 6") in this series.
+We have seen how to create a tunnel and listen with a socks port and domain socket file. But what happens if one of the jumphosts in the hops in the chain goes down? Can we switch to a backup jumphost? This will be the topic of the [Part 6](../multiple-jumphosts-in-ansible-tower-part-6/index.md "Multiple Jumphosts in Ansible Tower - Part 6") in this series.
 
 #### 9. References
 - Build custom virtual environments <https://docs.ansible.com/ansible-tower/latest/html/administration/openshift_configuration.html#build-custom-virtual-environments>
