@@ -54,14 +54,14 @@ The extra variables approach is useful if each invocation of the job template us
 #### 4. Output Parameters
 
 The job output from the playbooks can be retrieved with /api/v2/jobs/{{ job_id }}/stdout/?format=txt and searched with regex_search. However, this log can get very large when jobs produce large output. With verbosity set to 0, we need a way to output the data in a form that can be parsed. One way to achieve this is by printing the title as follows and parsing the response between the “tower_response=>” and “<”
-```
+``` yaml
     # Print as title
     - name: "tower_response=>{{ tower_response | to_json }}<="
       debug:
         msg: "Dummy message"
 ```
 This approach with response in the title works for single host. The problem with multiple hosts is that it only uses the first host in the inventory. If you run the job with multiple VMs in the inventory, then the output from the rest of the hosts is lost. A better way is to print using with_items as follows:
-```
+``` yaml
     # Print as loop item
     - name: Tower Response
       set_fact:
@@ -76,7 +76,7 @@ Searching Ansible Tower for specific named tasks using task__contains={{ respond
 The responding_task is “Tower%20Response” as seen in name for the “Print as loop item” comment above. The “tower_response=>…<=” delimiter is no longer required because the job event directly outputs the json string. We do not need a regex_replace to search the json output with this additional delimiter. This regex_replace is removed (shown as commented) in the code later.
 
 Another way is to use the set_stats module that also works with multiple hosts. This was mentioned in the comments to the article and has been added in Section 10.
-```
+``` yaml
     - name: Custom Response
       set_stats:
         data:
@@ -107,12 +107,12 @@ For testing, an inventory called yellowzone is created with multiple VMs four of
 
 Figure 2: Host Variables
 
- ![](images/Screen-Shot-2020-06-22-at-5.21.37-PM.png)
+<img src="images/Screen-Shot-2020-06-22-at-5.21.37-PM.png" width="600">
 
 #### 6. Source code for playbook pwquality.yml
 
 The source code for the pwquality.yml is shown below. The [first task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L10-L12) reads the configuration file. The [second task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L14-L18) sets the name value pairs in pwquality_values. The [third task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L20-L23) collects all the information json form. The final [fourth task](https://github.com/thinkahead/DeveloperRecipes/blob/master/RetrieveResultsFromTower/pwquality.yml#L26-L30) prints out the json in a format that can be parsed by the external client.
-```
+``` yaml
 ---
 - hosts: all
   gather_facts: false
@@ -171,7 +171,7 @@ aakrhel005.yellowykt.com : ok=0 changed=0 unreachable=0 failed=1 skipped=0 rescu
 
 Sample curl command is shown below that retrieves the output of the tasks containing name: “Tower Response”. Replace the tower_token, tower_api_url and job_id below to get the results from the Tower job. The job_event output shows results.event_data.res.item contains the json output of interest. This information is used in the client parsetest.yml playbook later.
 
-curl -k -H “Authorization: Bearer <<tower_token>>” “<< tower_api_url >>/api/v2/jobs/<<job_id>>/job_events/?event__contains=runner_item_on_ok&task__contains=Tower%20Response” | jq .
+`curl -k -H "Authorization: Bearer <<tower_token>>" "<< tower_api_url >>/api/v2/jobs/<<job_id>>/job_events/?event__contains=runner_item_on_ok&task__contains=Tower%20Response" | jq .`
 ```
 {
   "count": 3,
@@ -207,7 +207,7 @@ ansible-playbook parsetest.yml -e "job_id=12614" # Replace 12614 with your job i
 ```
 
 #### 8. Source Code for parsetest.yml
-```
+``` yaml
 ---
 - hosts: localhost
   connection: local
@@ -333,13 +333,18 @@ This article provides a recipe to retrieve output parameters from a playbook for
 Hope you have enjoyed the article. Share your thoughts in the comments or engage in the conversation with me on Twitter @aakarve. I look forward to hearing about how you retrieve Ansible Tower job run results for external use in your automation and if you would like to see something covered in more detail.
 
 #### 12. References
-
-Ansible Tower REST API https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html
-
-Filtering a collection in Ansible Tower https://docs.ansible.com/ansible-tower/latest/html/towerapi/filtering.html
-
-Print to standard output without escaping https://ansibledaily.com/print-to-standard-output-without-escaping/
-
-Source code for above recipe https://github.com/thinkahead/DeveloperRecipes/tree/master/RetrieveResultsFromTower
-
-Multiple Jumphosts in Ansible Tower https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1/
+- Ansible Tower REST API https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html
+- Filtering a collection in Ansible Tower https://docs.ansible.com/ansible-tower/latest/html/towerapi/filtering.html
+- Print to standard output without escaping https://ansibledaily.com/print-to-standard-output-without-escaping/
+- Source code for above recipe https://github.com/thinkahead/DeveloperRecipes/tree/master/RetrieveResultsFromTower
+- Multiple Jumphosts in Ansible Tower -- Part 1: Connecting to Linux hosts using ssh with nested ProxyCommand <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1>
+- Multiple Jumphosts in Ansible Tower -- Part 2: Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-2>
+- Multiple Jumphosts in Ansible Tower -- Part 3: Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-3>
+- Multiple Jumphosts in Ansible Tower -- Part 4: Multi jumphost connections to Linux hosts using ssh-add to add keys to ssh-agent <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-4/>
+- Multiple Jumphosts in Ansible Tower -- Part 5: Unix domain socket file instead of socks port <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-5/>
+- Multiple Jumphosts in Ansible Tower -- Part 6: Primary and Secondary/Backup Jumphosts and Reverse ssh Tunnel <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-6/>
+- Multiple Jumphosts in Ansible Tower -- Part 7: Failover using redundant jumphosts, tweaking ssh parameters and memory requirements for jumphosts <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-7/>
+- Multiple Jumphosts in Ansible Tower -- Part 8: Transferring files using ansible synchronize module and rsync <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-8/>
+- Multiple Jumphosts in Ansible Tower -- Part 9: Pull secrets from remote 3rd-party vaults over multiple jumphost hops <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-9/>
+- Multiple Jumphosts in Ansible Tower -- Part 10: Using Container Groups instead of bubblewrap for isolation of jobs <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-10/>
+- Multiple Jumphosts in Ansible Tower -- Part 11: Using Container Groups with sshuttle proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-11/>
