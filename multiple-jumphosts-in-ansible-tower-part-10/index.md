@@ -346,7 +346,7 @@ Login as admin. An openshift_cred credential is created of type "OpenShift or Ku
 
 We create two Container Groups by selecting Instance Groups -> "CREATE CONTAINER GROUP".
 
-![](images/Screen-Shot-2020-08-16-at-9.00.53-AM.png)
+<img src="images/Screen-Shot-2020-08-16-at-9.00.53-AM.png" width="800">
 
 The default Pod Spec uses the image: registry.redhat.io/ansible-tower-37/ansible-runner-rhel7 with args: ["sleep", "infinity"]. We do not use this default pod spec, but the yaml is shown below for reference.
 
@@ -368,7 +368,7 @@ spec:
 
 The container_group_1 that uses oc_tower_cg_org1 is as follows:
 
-![](images/Screen-Shot-2020-08-17-at-1.28.56-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.28.56-PM.png" width="800">
 
 The customized spec we use refers to the image that we pushed in the default namespace in the OpenShift image registry. You could push it to an external repo and use that instead. The args is changed to run the file runme.sh that was copied to the /root/keys directory when we created the new image using the Dockerfile.
 
@@ -389,7 +389,7 @@ spec:
 
 The container_group_2 uses the second image oc_tower_cg_org2:
 
-![](images/Screen-Shot-2020-08-17-at-1.26.39-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.26.39-PM.png" width="800">
 
 It uses the same spec except that in the image the org1 is replaced with org2. The two container groups: container_group_1 for org1 and container_group_2 for org2 look as follows in INSTANCE GROUPS:
 
