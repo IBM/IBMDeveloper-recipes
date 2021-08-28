@@ -397,11 +397,11 @@ It uses the same spec except that in the image the org1 is replaced with org2. T
 
 Still logged in as admin, we associate the container_group1 to org1 through "INSTANCE GROUPS"
 
-![](images/Screen-Shot-2020-08-18-at-3.34.20-PM.png)
+<img src="images/Screen-Shot-2020-08-18-at-3.34.20-PM.png" width="800">
 
 Also associate container_group_2 to org2 through "INSTANCE GROUPS" as in screenshot below:
 
-![](images/Screen-Shot-2020-08-18-at-3.34.39-PM.png)
+<img src="images/Screen-Shot-2020-08-18-at-3.34.39-PM.png" width="800">
 
 For creating the tunnel when the container is started, the args for the spec: containers: when we customized the pod spec was set to run the /root/keys/runme.sh. This script finally runs a [sleep infinity](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/ContainerGroupOrg1/keys/runme.sh#L61 "sleep infinity") as was present in the default spec. For this scenario, we have created the images with the private keys within the image in the /root/keys directory. The tunnel is established when the runme.sh calls the expect script [/root/keys/login_with_expect.sh](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/ContainerGroupOrg1/keys/login_with_expect.sh "login_with_expect.sh"). The [/root/keys/jumphostlogin.sh](https://github.com/thinkahead/DeveloperRecipes/blob/master/Jumphosts/ContainerGroupOrg1/keys/jumphostlogin.sh "jumphostlogin.sh") adds the keys to the ssh-agent and then deletes the keys. We have seen these scripts used in included roles in previous parts.
 
@@ -411,15 +411,15 @@ You should change the imagePullPolicy: IfNotPresent so that the image is pulled 
 
 We can set the Instance Group on the Job Template or on the Inventory. For our scenario, we will set it on the Inventory. Thus, the Instance Group will be kept empty when we create the job template. The yellowzone-org1 inventory is accessible to org1 and is set to use the container-group1.
 
-![](images/Screen-Shot-2020-08-17-at-1.59.38-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.59.38-PM.png" width="600">
 
 The yellowzone-org2 is accessible to org2 and is set to use the container-group2.
 
-![](images/Screen-Shot-2020-08-17-at-1.59.51-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.59.51-PM.png" width="600">
 
 The variables for the windows group inventories are set as follows with the ansible_psrp_proxy set to use the tunnel on 127.0.0.1:1234
 
-<img src="images/Screen-Shot-2020-08-17-at-2.35.15-PM.png" width="600">
+<img src="images/Screen-Shot-2020-08-17-at-2.35.15-PM.png" width="400">
 
 The ansible_psrp_proxy allows to reach the windows hosts using the socks5 tunnel.
 
