@@ -342,7 +342,7 @@ For the 5 jumphost hops tunnel for org1, the runme.sh executes the first "if" wi
 
 Login as admin. An openshift_cred credential is created of type "OpenShift or Kubernetes API Bearer Token" that can access the "default" namespace in OpenShift. Tower will use this credential to create pods from the images pushed to the registry.
 
-![](images/Screen-Shot-2020-08-16-at-9.02.38-AM.png)
+<img src="images/Screen-Shot-2020-08-16-at-9.02.38-AM.png" width="600">
 
 We create two Container Groups by selecting Instance Groups -> "CREATE CONTAINER GROUP".
 
@@ -393,7 +393,7 @@ The container_group_2 uses the second image oc_tower_cg_org2:
 
 It uses the same spec except that in the image the org1 is replaced with org2. The two container groups: container_group_1 for org1 and container_group_2 for org2 look as follows in INSTANCE GROUPS:
 
-![](images/Screen-Shot-2020-08-17-at-1.22.11-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.22.11-PM.png" width="600">
 
 Still logged in as admin, we associate the container_group1 to org1 through "INSTANCE GROUPS"
 
@@ -419,7 +419,7 @@ The yellowzone-org2 is accessible to org2 and is set to use the container-group2
 
 The variables for the windows group inventories are set as follows with the ansible_psrp_proxy set to use the tunnel on 127.0.0.1:1234
 
-![](images/Screen-Shot-2020-08-17-at-2.35.15-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-2.35.15-PM.png" width="600">
 
 The ansible_psrp_proxy allows to reach the windows hosts using the socks5 tunnel.
 
@@ -468,21 +468,21 @@ Both organizations org1 and org2 have users user1org1 and user1org2 created resp
 
 Both users have been given execute permission on both the job templates.
 
-![](images/Screen-Shot-2020-08-17-at-1.04.36-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-1.04.36-PM.png" width="600">
 
-![](images/Screen-Shot-2020-08-17-at-2.13.40-PM.png)
+<img src="images/Screen-Shot-2020-08-17-at-2.13.40-PM.png" width="600">
 
 The TEMPLATES view when logged in as user1org1 shows that the user only has execute access on the templates.
 
-![](images/Screen-Shot-2020-08-18-at-11.50.07-AM.png)
+<img src="images/Screen-Shot-2020-08-18-at-11.50.07-AM.png" width="800">
 
 We create two more users user2org1 and user2org2 and give them Admin Permissions on the org1 and org2 organizations respectively. When we login as user2org1, we can click on the ORGANIZATIONS to see the INSTANCE GROUPS containing container_group1 because the user2org1 belongs to org1.
 
-![](images/Screen-Shot-2020-08-18-at-3.25.45-PM.png)
+<img src="images/Screen-Shot-2020-08-18-at-3.25.45-PM.png" width="800">
 
 The following screenshot shows the user2org1 as ADMIN (Not a SYSTEM ADMINISTRATOR)
 
-![](images/Screen-Shot-2020-08-18-at-3.26.37-PM.png)
+<img src="images/Screen-Shot-2020-08-18-at-3.26.37-PM.png" width="800">
 
 The user1org1 as a Member cannot see the Instance Groups menu, but when logged in as the user2org1 with ADMIN ROLE, we can see it as in screenshot below:
 
