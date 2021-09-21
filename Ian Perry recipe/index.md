@@ -54,7 +54,7 @@ For a list of tested SAP data sources, please refer to [\[9\]](https://www-01.ib
 
 ### Step-by-Step
 
-####1. Installing the SAP Packs
+#### 1. Installing the SAP Packs
 
 Installing the SAP Packs on the Information Server Platform (client, server) follows the usual steps for this platform and is outlined in [\[1\]](https://www-01.ibm.com/support/docview.wss?uid=swg22016309#pack). Please take special care about the **required libraries** (esp. when to use the **32 bit** over the **64 bit** ones!) and services port entries outlined in [\[2\]](https://www-01.ibm.com/support/docview.wss?uid=swg22016343) and [\[3\]](https://www.ibm.com/support/knowledgecenter/SSZJPZ_11.7.0/com.ibm.swg.im.iis.ds.entpak.sapr3.use.doc/topics/t_pack_r3_Configuring_the_SAP_Dispatch_Gateway_service.html). The SAP libs need to be downloaded from the "SAP Service Marketplace" (which is also mentioned in [\[2\]](https://www-01.ibm.com/support/docview.wss?uid=swg22016343)).
 
@@ -62,7 +62,7 @@ Regarding installing the "SAP side components" (i.e. the authorization profiles)
 
 Again, I would encourage you reach out to some sort of SAP admin even though the referenced resources describe the tasks pretty well.
 
-####2. Setting up communication between SAP and DataStage
+#### 2. Setting up communication between SAP and DataStage
 
 Getting SAP and DataStage "see" each other incorporates the following tasks [\[3\]](https://www.ibm.com/support/knowledgecenter/SSZJPZ_11.7.0/com.ibm.swg.im.iis.ds.entpak.sapr3.use.doc/topics/t_pack_r3_Configuring_the_SAP_Dispatch_Gateway_service.html):
 
@@ -242,7 +242,7 @@ Getting SAP and DataStage "see" each other incorporates the following tasks [\[3
 
 This concludes the setup of the SAP <-> DataStage communication.
 
-####3. Delta Extract - additional configuration prerequisites required for specific extraction scenarios
+#### 3. Delta Extract - additional configuration prerequisites required for specific extraction scenarios
 
 For using the DeltaStage for extracting delta records from SAP "0FI\_GL\_4" there are some tasks to be done upfront as outlined next:
 
@@ -250,7 +250,7 @@ For using the DeltaStage for extracting delta records from SAP "0FI\_GL\_4" ther
 1.  Configure prerequisites security settings in SAP before using Delta Extract Stage
 1.  Configure the security settings for the SAP module in focus (e.g. Financial DataSources, FI)
 
-#####1. Activate Change Points
+##### 1. Activate Change Points
 
 There is a need for activating change pointers generally to enable SAP to recognize changes.
 
@@ -259,14 +259,14 @@ There is a need for activating change pointers generally to enable SAP to recogn
 
 ![bd61](images/bd61.png)
 
-#####2. Configure Security Settings for SAP
+##### 2. Configure Security Settings for SAP
 
 *   The Delta Extract Stage requires entry of the Logical System defined for the DataStage to be updated in RSBASIDOC. For a detailed description of the five steps, please refer to \[5\] for the topic "**Scenario 2: Prerequisites security settings to be done in SAP before using Delta Extract Stage**".
     *   The following screenshot is simply for your reference
 
 ![scc4](images/scc4.png)
 
-#####3. Configure the security settings for the SAP module in focus (e.g. Financial DataSources, FI)
+##### 3. Configure the security settings for the SAP module in focus (e.g. Financial DataSources, FI)
 
 For the usecase "**Extracting Delta Records from the General Ledger (0FI\_GL\_04)**" there is an additional configuration step on the SAP side. Again, please refer to [\[5\]](http://www-01.ibm.com/support/docview.wss?uid=swg22001268#s2) topic "**Scenario 3: Extracting from FI (Financial) DataSources**" on what and how to do this.
 
@@ -276,7 +276,7 @@ The following screenshot is for your reference, only.
 
 ![FIBF-1](images/FIBF-1.png)
 
-#####4. The money sets: Creating and extracting delta records
+##### 4. The money sets: Creating and extracting delta records
 
 After wrestling through all the necessary configurations (hopefully being successful) we are now at the point where we start caring about the foundational idea: Creating and receiving delta records with DataStage... yeahhhh ... party.... whohohoooo... now comes the fun part... hopefully...
 
@@ -296,7 +296,7 @@ For those of you already looking at the DeltaStage GUI you might have figured th
 
 Let me outline the former statements about the sequence of extract modes in the following section.
 
-##### 3 Phases of Delta (!) record processing
+##### The 3 Phases of Delta (!) record processing
 
 Given the full run was successful (mode "**F**"), the way the delta extraction phases are as follows (outlined in [\[6\]](https://www-01.ibm.com/support/docview.wss?uid=swg22005807) and [\[7\]](https://www-01.ibm.com/support/docview.wss?uid=swg22015315):
 
