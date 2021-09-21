@@ -3,7 +3,7 @@
 
 Ian_Perry
 
-Published on November 22, 2018 / Updated
+Published on November 22, 2018
 
 ### Overview
 
@@ -208,7 +208,7 @@ Getting SAP and DataStage "see" each other incorporates the following tasks [\[3
 
 *   This is a good configuration when creating Partner Profiles!
 
-![Partner-Profile-5](/recipes/wp-content/uploads/sites/41/2018/11/Partner-Profile-5.png)
+![Partner-Profile-5](images/Partner-Profile-5.png)
 
 ##### 5. Test sending IDocs from SAP to DataStage
 
