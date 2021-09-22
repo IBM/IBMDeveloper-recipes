@@ -23,7 +23,7 @@ Build a Multi-protocol Gateway (MPGW) to invoke the appliance's REST API interfa
 * Ensure the REST management interface is enabled: https://www.ibm.com/support/knowledgecenter/en/SS9H2Y_7.6.0/com.ibm.dp.doc/webgui_restinterface.html
 * (Optional) Ensure the DataPower Logging Category used in the code is set in the Logging Category. This is used if you want to isolate the statistics logs to a certain logging category, which will isolate the log events to the log category
 
-![](images/customLogTarget)
+![](images/customLogTarget.jpg)
 
 *  Assign the **MGMT** host alias to the IP that is being used for the REST Management Interface because the service will invoke the REST API with host alias MGMT
 
