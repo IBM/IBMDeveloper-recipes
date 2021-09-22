@@ -64,11 +64,11 @@ Here’s an overview of some popular open-source automation tools:
 
 Jenkins is an automation server that you can use as a standalone CI server or for both CI and CD. Jenkins integrates with a wide variety of tools and includes thousands of plugins. It supports a variety of languages, including C/C++, Java, Python, Ruby, and PHP.
 
-      **2\. GoCD**
+**2\. GoCD**
 
 GoCD is a CI/CD server. GoCD includes features for monitoring, custom triggers, test reporting, build comparison, and configuration templates. It supports integration with a variety of services, including Kubernetes, GitHub, AWS, and Maven.
 
-      **3\. Chef**
+**3\. Chef**
 
 Chef is a configuration management platform. Chef includes features for transferring applications to the cloud, on-premise and cloud server management, and API hosting. It supports a range of integrations, including AWS, Google Cloud, Azure, OpenStack, and Oracle Cloud.
 
