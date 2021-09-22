@@ -7,6 +7,8 @@ Tags: Java development, Security, Web development
 
 Published on March 28, 2019 / Updated on April 29, 2021
 
+![](images/SSL-certificate-lock-2-768x508)
+
 ### Overview
 
 Skill Level: Intermediate
