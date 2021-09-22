@@ -2,7 +2,7 @@
 
 ## A best Practice in Dockerizing Vue.js or Node.js Application
 
-[Jeya Gandhi Rajan](https://developer.ibm.com/recipes/author/jeyagandhi/)
+Jeya Gandhi Rajan
 
 Tags: Cloud computing, Web development
 

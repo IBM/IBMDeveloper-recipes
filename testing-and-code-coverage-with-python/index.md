@@ -2,7 +2,7 @@
 
 ## Learn how to write test cases in Python and measure code coverage
 
-[Shalabh Aggarwal](https://developer.ibm.com/recipes/author/shalabh7777/)
+Shalabh Aggarwal
 
 Tags: none
 

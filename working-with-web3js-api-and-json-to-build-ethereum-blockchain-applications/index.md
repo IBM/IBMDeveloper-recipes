@@ -2,7 +2,7 @@
 
 ## Learn how to build blockchain and decentralized applications in Ethereum with Solidity programming
 
-[mattumd](https://developer.ibm.com/recipes/author/mahdiumd/)
+mattumd
 
 Tags: Cloud computing, Collaboration solutions, Continuous engineering, Web development
 

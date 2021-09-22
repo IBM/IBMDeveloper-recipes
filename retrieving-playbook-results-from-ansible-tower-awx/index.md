@@ -2,7 +2,7 @@
 
 ## An elegant mechanism to retrieve required output results from playbooks for multiple hosts in the inventory
 
-[Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
+Alexei.Karve
 
 Tags: Cloud computing, DevOps, Linux
 
