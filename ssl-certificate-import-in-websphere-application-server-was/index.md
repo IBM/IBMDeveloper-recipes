@@ -38,22 +38,21 @@ Go to **Security** (Left Nav) -> **SSL certificate and key management** and unde
 
 Click on **NodeDefaultTrustStore**
 
-**![New1-3](images/New1-3.png)  
-**
+![New1-3](images/New1-3.png)  
 
 #### 4. Start addition of certificate
 
 Under **Additional Properties**, Click on **Signer Certificates**
 
-**![New1-4](images/New1-4.png)  
-**
+![New1-4](images/New1-4.png)  
+
 
 #### 5. Add new signer certificate
 
 Click on **Add** button
 
-**![New1-5](images/New1-5.png)  
-**
+![New1-5](images/New1-5.png)  
+
 
 #### 6. Provide certificate details
 
