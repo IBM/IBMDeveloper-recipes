@@ -31,7 +31,7 @@ Hyperledger Fabric supports Smart Contact development in general-purpose program
 
 We have written two sets of tutorials to explore Hyperledger Fabric in depth. First set covered the following six recipes:  
 
-It started with [installing Hyperledger Fabric on an AWS EC2 virtual machine](https://myhsts.org/tutorial-learn-how-to-install-blockchain-hyperledger-fabric-on-amazon-web-services.php), [setting up the first Hyperledger Fabric network](/recipes/tutorials/building-hyperledger-fabric-network-for-blockchain-applications/) and [working with Hyperledger Fabric Command Line Interface or CLI](https://myhsts.org/tutorial-learn-how-to-work-with-hyperledger-fabric-cli-to-setup-network-and-manage-chaincode.php). We learned the following:
+It started with [installing Hyperledger Fabric on an AWS EC2 virtual machine](https://myhsts.org/tutorial-learn-how-to-install-blockchain-hyperledger-fabric-on-amazon-web-services.php), setting up the first Hyperledger Fabric network and [working with Hyperledger Fabric Command Line Interface or CLI](https://myhsts.org/tutorial-learn-how-to-work-with-hyperledger-fabric-cli-to-setup-network-and-manage-chaincode.php). We learned the following:
 
 *   Generating the crypto/certificate using cryptogen
 *   Generating the configuration transaction using configtxgen
@@ -40,7 +40,7 @@ It started with [installing Hyperledger Fabric on an AWS EC2 virtual machine](ht
 *   Using the CLI to install and instantiate the chaincode
 *   Using the CLI to invoke and query the chaincode
 
-We moved on to show you how to [Add New Network to a Channel](https://myhsts.org/tutorial-learn-how-to-add-organization-to-channel-in-hyperledger-fabric.php), [Use CouchDB as a State Database for Hyperledger Fabric](/recipes/tutorials/use-couchdb-as-a-state-database-for-hyperledger-fabric/), and [Create a Smart Contract and then Deploy it into the Blockchain](https://myhsts.org/tutorial-learn-how-to-write-first-blockchain-application-in-hyperledger-fabric.php).  
+We moved on to show you how to [Add New Network to a Channel](https://myhsts.org/tutorial-learn-how-to-add-organization-to-channel-in-hyperledger-fabric.php), Use CouchDB as a State Database for Hyperledger Fabric, and [Create a Smart Contract and then Deploy it into the Blockchain](https://myhsts.org/tutorial-learn-how-to-write-first-blockchain-application-in-hyperledger-fabric.php).  
 
 In short, in the previous recipes, we learned about how to set up and configure Hyperledger Fabric. We explored its key components, including channels, **Membership Service Providers** (**MSPs**), the ordering service, and Fabric **Certificate Authority** (**CA**).  
 
@@ -49,9 +49,9 @@ The second set, we will show you how to build a simple device asset management D
 *   [Reviewing of inventory asset management and chaincode](https://myhsts.org/tutorial-learn-how-to-implement-hyperledger-fabric-via-inventory-asset-management-application.php)
 *   Writing chaincode as a smart contract using Go
 *   [Compiling and deploying Fabric chaincode](https://myhsts.org/tutorial-learn-how-to-compile-and-deploy-hyperledger-fabric-chaincode-and-smart-contracts.php)
-*   [Running and testing the smart contract](/recipes/tutorials/running-and-testing-smart-contracts-for-hyperledger-fabric/)
+*   Running and testing the smart contract
 *   [Designing front-end of an application with Hyperledger Fabric through the SDK](https://myhsts.org/tutorial-learn-how-to-design-front-end-application-with-hyperledger-fabric-through-sdk.php)
-*   [Developing back-end of an application with Hyperledger Fabric through the SDK](/recipes/tutorials/developing-backend-application-with-hyperledger-fabric-through-sdk/)
+*   Developing back-end of an application with Hyperledger Fabric through the SDK
 
 In summary, in the second set of recipes, we are going to build a simple device asset management DApp. We will exploit this example by writing chaincode implemented by various programming languages and we'll also build, test, and deploy our DApp.  
 
