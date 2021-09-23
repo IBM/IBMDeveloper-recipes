@@ -61,13 +61,13 @@ UPDATE: Okay, following on from a few comments being posted about errors with th
 
 When starting up Unity and opening the Project I see the following message (and this matches the error raied in the comments below):
 
-![\"WatsonSDK_240_error\"](images/WatsonSDK_240_error.png\")
+![\"WatsonSDK_240_error\"](images/WatsonSDK_240_error.png)
 
 (_oddly, even though I downloaded v2.4.0 the changelog file still only showed 2.3.0 - but I assure you it was the 2.4.0 release I tested with_)
 
 Modify the following 2 lines of code in the WatsonTTS.cs file and everything will then work fine for you - I tested it after the code change and all works as expected.
 
-![\"WatsonTTS_mods_for_WatsonSDK_240\"](images/WatsonTTS_mods_for_WatsonSDK_240.png\")
+![\"WatsonTTS_mods_for_WatsonSDK_240\"](images/WatsonTTS_mods_for_WatsonSDK_240.png)
 
 (Thanks to Crazy Minnow for the info. in the comments)
 
