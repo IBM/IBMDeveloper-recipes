@@ -130,9 +130,11 @@ app.listen(3000, function () { console.log('Example app listening on port 3000!'
 #### 3. Writing Node.js Client-Side Code
 
 We still need to work on one more file before we complete the end-to-end development. The Node.js client-side code provides a user interface, lets the user see the blockchain result in the browser, and invokes a method from a web page. Our Node.js client-side code can be found in index.ejs under the views folder. We can open this file and start to add some code in it.  
+
 For the Ship function, we use the jQuery post method to call the Node.js server-side Ship function. This will invoke the blockchain Ship method in the assetmgr chaincode, as follows:
 
-```<script>
+```
+<script>
 
 $(document).ready(function(){
 
