@@ -591,7 +591,7 @@ Configure Xvfb parameters.
 
 Add the Build step 'Artifact Resolver'. Using this, you can pull BAR files from repository.
 
-![Screen-Shot-2019-11-04-at-4.56.20-AM](/recipes/wp-content/uploads/sites/41/2019/11/Screen-Shot-2019-11-04-at-4.56.20-AM.png)
+![Screen-Shot-2019-11-04-at-4.56.20-AM](images/Screen-Shot-2019-11-04-at-4.56.20-AM.png)
 
 Add the Build step 'Execute Shell' to copy the BAR file. Create a directory 'icp-builds' under /var. This directory will temporarily be used while pulling the zip file from nexus and extracting BAR file.
 
