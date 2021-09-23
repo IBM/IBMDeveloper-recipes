@@ -21,23 +21,23 @@ Disclaimer: This code is provided as-is
 
 ### Ingredients
 
-IBM Cloud account - [sign up for one](\"https://console.bluemix.net/registration/?target=%2Fdashboard%2Fapps\"), if you don't already have one.
+IBM Cloud account - [sign up for one](https://console.bluemix.net/registration/?target=%2Fdashboard%2Fapps), if you don't already have one.
 
-Unity3D development environment - [Downloads](\"https://unity3d.com/get-unity/download\") (_as per the [EULA guidelines](\"https://unity3d.com/legal/terms-of-service\"), determine the [correct version](\"https://unity3d.com/legal/terms-of-service/software\") for you_)
+Unity3D development environment - [Downloads](https://unity3d.com/get-unity/download) (_as per the [EULA guidelines](https://unity3d.com/legal/terms-of-service), determine the [correct version](https://unity3d.com/legal/terms-of-service/software) for you_)
 
-Sign up for a [unity developer account](\"https://assetstore.unity.com/auth/signup?redirect_to=%2F\") (so you can access the [unity asset store](\"https://assetstore.unity.com\"))
+Sign up for a [unity developer account](https://assetstore.unity.com/auth/signup?redirect_to=%2F) (so you can access the [unity asset store](https://assetstore.unity.com))
 
-(free) UMA2 plug-in - available from [unity asset store](\"https://assetstore.unity.com/packages/3d/characters/uma-2-unity-multipurpose-avatar-35611\")
+(free) UMA2 plug-in - available from [unity asset store](https://assetstore.unity.com/packages/3d/characters/uma-2-unity-multipurpose-avatar-35611)
 
-(not-free) SALSA plug-in (RandomEyes and LipSync)\* - available from [unity asset store](\"https://assetstore.unity.com/packages/tools/animation/salsa-with-randomeyes-16944\")
+(not-free) SALSA plug-in (RandomEyes and LipSync)\* - available from [unity asset store](https://assetstore.unity.com/packages/tools/animation/salsa-with-randomeyes-16944)
 
-(free) IBM Watson SDK - available from unity assets store ([available directly from here](\"https://github.com/watson-developer-cloud/unity-sdk\"))
+(free) IBM Watson SDK - available from unity assets store ([available directly from here](https://github.com/watson-developer-cloud/unity-sdk))
 
-IBM Watson APIs - [Watson Assistant](\"https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation\") / [Speech to Text](\"https://console.bluemix.net/catalog/services/speech-to-text\") / [Text to Speech](\"https://console.bluemix.net/catalog/services/text-to-speech\") - available from IBM Cloud
+IBM Watson APIs - [Watson Assistant](https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation) / [Speech to Text](https://console.bluemix.net/catalog/services/speech-to-text) / [Text to Speech](https://console.bluemix.net/catalog/services/text-to-speech) - available from IBM Cloud
 
 \*other products are available, I just happened to choose this one due to it's simplicity, ease-of-use and very helpful website
 
-[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](\"/code/open/projects/watson-developer-cloud-unity-sdk/\")
+[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](/code/open/projects/watson-developer-cloud-unity-sdk/)
 
 ![\"watson_unity_sdk\"](images/watson_unity_sdk.png)
 
@@ -45,17 +45,17 @@ I apologise up-front that this article is very screenshot heavy, but I do feel t
 
 I'm afraid that due to having to purchase the license/software for SALSA I will not be supplying a github repo. for this project - but, as you will see below, all of the components are available for you to install, configure and setup. The only code is the .cs file and I've screenshot the contents of that file enough for you to recreate yourself.
 
-UPDATE: Okay, for ease of reading, I've [uploaded the .cs file to a github repo. as-is](\"https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/WatsonTTS.cs\")
+UPDATE: Okay, for ease of reading, I've [uploaded the .cs file to a github repo. as-is](https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/WatsonTTS.cs)
 
-**UPDATE/UPDATE**: As mentioned by a few people during November 2018, the Watson Services and SDK was migrated to use the new AIM Token Authentication mechanism, which broke the previous code that connected to the Watson services. I have now created a [NEW Watson\_newServices.cs file that can downloaded from the github repo](\"https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/Watson_newServices.cs\"). This still allows you to use the username/password if you have old services, but if you create new one's you will need to use the aimkey value. I've tested this in a newer version of Unity (2018.2.16f1) also.
+**UPDATE/UPDATE**: As mentioned by a few people during November 2018, the Watson Services and SDK was migrated to use the new AIM Token Authentication mechanism, which broke the previous code that connected to the Watson services. I have now created a [NEW Watson\_newServices.cs file that can downloaded from the github repo](https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/Watson_newServices.cs). This still allows you to use the username/password if you have old services, but if you create new one's you will need to use the aimkey value. I've tested this in a newer version of Unity (2018.2.16f1) also.
 
-UPDATE 2021: A very kind fellow developer has extended the .CS file to utilise the latest Watson SDK 4.30 - you can [DOWNLOAD his CS file from GITHUB](\"https://github.com/Qusai-Azzam/Unity3d-IBM-WatsonAPI\") if you require it
+UPDATE 2021: A very kind fellow developer has extended the .CS file to utilise the latest Watson SDK 4.30 - you can [DOWNLOAD his CS file from GITHUB](https://github.com/Qusai-Azzam/Unity3d-IBM-WatsonAPI) if you require it
 
 Here's a sneak peek of the end result:
 
 https://youtu.be/Ff04RHfgvHg
 
-[This ARTICLE](\"https://medium.com/@soulmachines/that-may-sound-like-a-line-from-a-sci-fi-movie-and-feel-very-much-like-tomorrows-world-but-it-is-fa29c188abf1\") does a really good job (from [SOULMACHINES](\"https://www.soulmachines.com/\")) of explaining why using a human interface is going to change the way we interact with computers....
+[This ARTICLE](https://medium.com/@soulmachines/that-may-sound-like-a-line-from-a-sci-fi-movie-and-feel-very-much-like-tomorrows-world-but-it-is-fa29c188abf1) does a really good job (from [SOULMACHINES](https://www.soulmachines.com/)) of explaining why using a human interface is going to change the way we interact with computers....
 
 UPDATE: Okay, following on from a few comments being posted about errors with the latest Watson SDK (2.4.0) that was breaking the code, I tested this myself to replicate the issue. I downloaded the latest version of Watson SDK 2.4.0 .zip file, extracted it and overwrote the Assets/Watson folder with the contents.
 
@@ -73,11 +73,11 @@ Modify the following 2 lines of code in the WatsonTTS.cs file and everything wil
 
 Due to a change with the Watson Assistant service in November 2018, this article has had to be updated to use the latest Watson SDK (v2.11.0) and the creation of a new Watson Assistant service. (Thanks to Adam Chapman, for raising the issue that the IAM authentication required a code migration to the latest SDK and to change the WatsonTTS.cs code to connect to the Watson Assistant service).
 
-[Get the latest .cs file from the Github repo here.](\"https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/Watson_newServices.cs\")
+[Get the latest .cs file from the Github repo here.](https://github.com/YnotZer0/unity3d_watsonSdk/blob/master/Watson_newServices.cs)
 
 ....
 
-UPDATE 2021: A very kind fellow developer has extended the .CS file to utilise the latest Watson SDK 4.30 - you can [DOWNLOAD his CS file from GITHUB if you require it](\"https://github.com/Qusai-Azzam/Unity3d-IBM-WatsonAPI\")
+UPDATE 2021: A very kind fellow developer has extended the .CS file to utilise the latest Watson SDK 4.30 - you can [DOWNLOAD his CS file from GITHUB if you require it](https://github.com/Qusai-Azzam/Unity3d-IBM-WatsonAPI)
 
 
 ### Step-by-step
