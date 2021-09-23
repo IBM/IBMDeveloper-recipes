@@ -446,8 +446,8 @@ As you can see above, I've spent more time writing this up than it actually took
 
 Anyway, there is always scope for doing more, this is genuinely just the start... I hope you find it a useful starting point for you own projects. Good Luck!
 
-[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](/code/open/projects/watson-developer-cloud-unity-sdk/)
+[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk)
 
-![https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](https://youtu.be/Ff04RHfgvHg/watson_unity_sdk.png)
+![https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](images/watson_unity_sdk.png)
 
-[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](/code/open/projects/watson-developer-cloud-unity-sdk/)
+[https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk/](https://developer.ibm.com/code/open/projects/watson-developer-cloud-unity-sdk)
