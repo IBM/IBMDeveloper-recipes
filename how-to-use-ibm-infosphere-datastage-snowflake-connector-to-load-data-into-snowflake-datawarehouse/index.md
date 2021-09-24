@@ -53,11 +53,11 @@ To create a job that loads data into Snowflake datawarehouse the Snowflake conne
 
 3\. Alternatively by selecting the property '**Use connection URL'** to '**Yes'** , the **'URL'** property would be enabled and other connection properties would be disabled and in the URL property the snowflake jdbc URL can be specified. The Snowflake jdbc URL should be like –
 
-jdbc\:snowflake\://<Account>.snowflakecomputing.com/?db=<databasename>&warehouse=<warehousename>&schema=<schemaname>
+`jdbc:snowflake://<Account>.snowflakecomputing.com/?db=<databasename>&warehouse=<warehousename>&schema=<schemaname>``
 
 for example -
 
-jdbc\:snowflake\://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV
+`jdbc:snowflake://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV`
 
 Note: Please refer snowflake driver documentation for any additional information on the Connection properties.
 
