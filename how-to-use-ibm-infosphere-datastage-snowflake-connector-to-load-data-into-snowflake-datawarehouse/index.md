@@ -71,7 +71,7 @@ Note: Please refer snowflake driver documentation for any additional information
 
   c. Under the **'Staging area format type options'** property specify the format options of the staging area. These format options will be used when running the COPY statement. If an existing staging area is being used then these format options will over write the format options used when the stage was created.  
 
-    For example , if the staging area was created with comma(,) as the field delimiter and if the user intends to use pipe(|) as the field delimiter and specifies the same in **'Field delimiter'** property then during execution of COPY statement the data from the staging area is read using pipe(|) as the field delimiter. Similar is the case with other format options.
+For example , if the staging area was created with comma(,) as the field delimiter and if the user intends to use pipe(|) as the field delimiter and specifies the same in **'Field delimiter'** property then during execution of COPY statement the data from the staging area is read using pipe(|) as the field delimiter. Similar is the case with other format options.
 
     d. Specify the staging area name in the 'Staging area name' property , which can either be an existing staging area name or a new one which would be created during job run.
 
