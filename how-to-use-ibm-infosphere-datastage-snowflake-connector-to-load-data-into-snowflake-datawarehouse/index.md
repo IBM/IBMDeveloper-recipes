@@ -53,11 +53,11 @@ To create a job that loads data into Snowflake datawarehouse the Snowflake conne
 
 3\. Alternatively by selecting the property '**Use connection URL'** to '**Yes'** , the **'URL'** property would be enabled and other connection properties would be disabled and in the URL property the snowflake jdbc URL can be specified. The Snowflake jdbc URL should be like –
 
-jdbc:snowflake://<Account>.snowflakecomputing.com/?db=<databasename>&warehouse=<warehousename>&schema=<schemaname>
+jdbc\:snowflake\://<Account>.snowflakecomputing.com/?db=<databasename>&warehouse=<warehousename>&schema=<schemaname>
 
 for example -
 
-jdbc:snowflake://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV
+jdbc\:snowflake\://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV
 
 Note: Please refer snowflake driver documentation for any additional information on the Connection properties.
 
@@ -65,19 +65,19 @@ Note: Please refer snowflake driver documentation for any additional information
 
 5\. Under the '**Load from file properties'** property –
 
-  a. Provide the path where the staging files should be created in the **'Directory path'** property. This path should be an accessible location for datastage user on the engine tier.
+a. Provide the path where the staging files should be created in the **'Directory path'** property. This path should be an accessible location for datastage user on the engine tier.
 
-  b. Select '**Yes'** to create a new staging area for this job or select **'No'** to use an existing staging area.
+b. Select '**Yes'** to create a new staging area for this job or select **'No'** to use an existing staging area.
 
-  c. Under the **'Staging area format type options'** property specify the format options of the staging area. These format options will be used when running the COPY statement. If an existing staging area is being used then these format options will over write the format options used when the stage was created.  
+c. Under the **'Staging area format type options'** property specify the format options of the staging area. These format options will be used when running the COPY statement. If an existing staging area is being used then these format options will over write the format options used when the stage was created.  
 
 For example , if the staging area was created with comma(,) as the field delimiter and if the user intends to use pipe(|) as the field delimiter and specifies the same in **'Field delimiter'** property then during execution of COPY statement the data from the staging area is read using pipe(|) as the field delimiter. Similar is the case with other format options.
 
-    d. Specify the staging area name in the 'Staging area name' property , which can either be an existing staging area name or a new one which would be created during job run.
+d. Specify the staging area name in the 'Staging area name' property , which can either be an existing staging area name or a new one which would be created during job run.
 
-    e. Specify 'Yes' or 'No' for 'Purge files after loading' property based on whether the files in the staging area should be purged or retained at the end of job run.
+e. Specify 'Yes' or 'No' for 'Purge files after loading' property based on whether the files in the staging area should be purged or retained at the end of job run.
 
-    f. Run the job.
+f. Run the job.
 
 ![sf4](images/sf4.jpg)
 
