@@ -59,7 +59,9 @@ jdbc:snowflake://<Account>.snowflakecomputing.com/?db=<databasename>&warehouse=<
 
 for example -
 
-`jdbc:snowflake://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV`
+```
+jdbc:snowflake://mysnowflakeaccount.us-east-1.snowflakecomputing.com/?db=DEV&warehouse=DEV&schema=DEV
+```
 
 Note: Please refer snowflake driver documentation for any additional information on the Connection properties.
 
