@@ -187,8 +187,7 @@ stages:
  - deploy
 ```
 
-**1\. Stages 1 and 2: building the images for each architecture  
-**
+**1\. Stages 1 and 2: building the images for each architecture**
 
 ```# a. building ppc64le image: the build.sh script builds the specified
 #    arch image using the Dockerfile present in <arch>/Dockerfile location in repo.
