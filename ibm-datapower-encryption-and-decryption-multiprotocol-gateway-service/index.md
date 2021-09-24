@@ -110,10 +110,12 @@ Continue to click **Apply**, then **Done** to accept and get back to the Policy 
 
 15.  In the _Configure Set Variable Action_ pop up, click on the **Var Builder** for the Variable Name, collapse the _Service_ _Variables_, to locate and select **var://service/mpgw/skip-backside**.  
     Input **1** for the _Variable_ _Assignment_ and click **Done**.  
-    ![19.SetVarSkipbackside](images/19.jpg)  
+
+![19.SetVarSkipbackside](images/19.jpg)  
 
 16.  Then back in the main _Configure Multi-Protocol Gateway Style Policy_ panel, click on **Apply Policy** and your policy should look like the following.  
-    ![20.encryptdecryptpolicycomplete](images/20.jpg)  
+
+![20.encryptdecryptpolicycomplete](images/20.jpg)  
 
 #### 2. Create the HTTP Front Side Handler
 
