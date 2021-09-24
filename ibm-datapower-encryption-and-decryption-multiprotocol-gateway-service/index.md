@@ -84,7 +84,7 @@ Note: If the repo does not work, the code is located in the appendix.
 
 10.  Assign the _Variable Assignment_ to **1** and click **Done**.  
 
-![14.setvar_skipbackside_varAssignment](images/14..jpg)  
+![14.setvar_skipbackside_varAssignment](images/14.jpg)  
 
 11.  Click on **Apply Policy** back in the _Configure Multi-Protocol Gateway Style Policy_ and your policy should look like the following.  
 
