@@ -420,8 +420,7 @@ Workflow can contains some variables
 To define new variable –> ${Variable}  
 Sometimes you need to define hive libpath in HUE to work with hive
 
-**ozzie.libpath : /user/oozie/share/lib/hive  
-**
+**ozzie.libpath : /user/oozie/share/lib/hive**
 
 **![pic30](images/pic30.png)**
 
