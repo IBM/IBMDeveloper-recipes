@@ -261,8 +261,7 @@ script:
 - docker run --rm quay.io/snehakpersistent/multi-arch-image:latest
 ```
 
-**4\. Stage 5: connecting to the RedHat OpenShift cluster using a GitLab SSH executor running in the bastion node and deploying the application  
-**
+**4\. Stage 5: connecting to the RedHat OpenShift cluster using a GitLab SSH executor running in the bastion node and deploying the application**
 
 It is important to make clear that for this specific step we have added the RedHat OpenShift Bastion as a GitLab Runner (using the executor with the Shell option enabled) so we can safely run the oc commands without setting the secrets as part of GitLab.
 
