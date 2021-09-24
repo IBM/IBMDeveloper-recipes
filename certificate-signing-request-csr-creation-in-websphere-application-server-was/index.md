@@ -65,7 +65,7 @@ The CSR details can be seen as below. Click on **Save**.
 
 ![7-2](images/7-2.png)
 
-####8.  CSR creation successful
+#### 8. CSR creation successful
 
 ![8-2](images/8-2.png)
 
