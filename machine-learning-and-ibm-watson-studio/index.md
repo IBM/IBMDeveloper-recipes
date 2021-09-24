@@ -882,7 +882,7 @@ print var1
 plt.plot(var1)
 ```
 
-                      ![pcaimage](images/pcaimage.png)  
+![pcaimage](images/pcaimage.png)  
 
 ```
 #Looking at above plot, 30 variables has the most effec
