@@ -17,7 +17,7 @@ Redhat OpenShift 4.5 has Introduced Installation process with VMWare 6.7 onwards
 
 This Installation is tested on VMWare vCenter 7.0 Infrastructure with necessary details mentioned in below reference:
 
-[https://docs.openshift.com/container-platform/4.5/installing/installing\_vsphere/installing-vsphere-installer-provisioned-customizations.html](\"https://docs.openshift.com/container-platform/4.5/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html\")
+[https://docs.openshift.com/container-platform/4.5/installing/installing\_vsphere/installing-vsphere-installer-provisioned-customizations.html](https://docs.openshift.com/container-platform/4.5/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html)
 
 The installation is tested with OpenShift 4.5.x. Though this Installation is tested on On-Premise VMWare Infrastrucure, I don't see much difference in doing it on any of the Cloud Provider's VMWare Infrastructure except for the Networking.
 
