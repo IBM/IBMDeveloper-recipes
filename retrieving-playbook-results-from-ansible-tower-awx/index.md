@@ -2,7 +2,7 @@
 
 ## An elegant mechanism to retrieve required output results from playbooks for multiple hosts in the inventory
 
-[Alexei.Karve](https://developer.ibm.com/recipes/author/karve/)
+Alexei.Karve
 
 Tags: Cloud computing, DevOps, Linux
 
@@ -103,7 +103,7 @@ The playbook pwquality.yml reads the /etc/security/pwquality.conf and converts i
 ```
 The “inventory_hostname” and “ansible_host” are also combined with the above. If the “required_pass_minlen” is set as a variable in the inventory/group/host, it is combined with the above or set as empty if not defined. Finally the needs_fix is computed by checking if the (pwquality_values.minlen < required_pass_minlen) and fix_mode is true.
 
-For testing, an inventory called yellowzone is created with multiple VMs four of which will be used: aakrhel001.yellowykt.com, aakrhel002.yellowykt.com, aakrhel003.yellowykt.com and aakrhel005.yellowykt.com. The aakrhel001.yellowykt.com does not have the variable required_pass_minlen, aakrhel002.yellowykt.com is set with the variable required_pass_minlen: 18 and aakrhel003.yellowykt.com is set with the variable required_pass_minlen: 17. This variable for aakrhel003.yellowykt.com is shown in Figure 2. You can set the required_pass_minlen at the inventory or group levels (if you create groups). The previously mentioned precedence will apply when the variable required_pass_minlen is referenced in the playbook pwquality.yml. Figure 2 also shows an additional variable that may be required if you do not have direct connectivity to the endpoints and may need to override the ansible_ssh_common_args to use jumphosts. Connecting to endpoints using multiple jumphosts is covered in the series [Multiple Jumphosts in Ansible Tower](https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1/).
+For testing, an inventory called yellowzone is created with multiple VMs four of which will be used: aakrhel001.yellowykt.com, aakrhel002.yellowykt.com, aakrhel003.yellowykt.com and aakrhel005.yellowykt.com. The aakrhel001.yellowykt.com does not have the variable required_pass_minlen, aakrhel002.yellowykt.com is set with the variable required_pass_minlen: 18 and aakrhel003.yellowykt.com is set with the variable required_pass_minlen: 17. This variable for aakrhel003.yellowykt.com is shown in Figure 2. You can set the required_pass_minlen at the inventory or group levels (if you create groups). The previously mentioned precedence will apply when the variable required_pass_minlen is referenced in the playbook pwquality.yml. Figure 2 also shows an additional variable that may be required if you do not have direct connectivity to the endpoints and may need to override the ansible_ssh_common_args to use jumphosts. Connecting to endpoints using multiple jumphosts is covered in the series [Multiple Jumphosts in Ansible Tower](https://github.com/IBM/IBMDeveloper-recipes/tree/main/multiple-jumphosts-in-ansible-tower-part-1/index.md).
 
 Figure 2: Host Variables
 
@@ -148,7 +148,7 @@ The source code for the pwquality.yml is shown below. The [first task](https://g
         - "{{ tower_response | to_json }}"
 ```
 
-The tasks in the playbook are executed with the default [linear strategy](https://docs.ansible.com/ansible/latest/plugins/strategy/linear.html#linear-strategy), where each task is run on up to serial hosts in parallel. Ansible waits for all hosts to complete the task before starting the next task on all the hosts. The [free strategy](https://docs.ansible.com/ansible/latest/plugins/strategy/free.html) lets each host run independently, starting its next task as soon as it finishes the previous one, regardless of how far other hosts have proceeded. The free strategy is used in the next article on [Locking Simultaneous Access to Hosts in Ansible Tower](https://developer.ibm.com/recipes/tutorials/locking-simultaneous-access-to-hosts-in-ansible-playbooks/).
+The tasks in the playbook are executed with the default [linear strategy](https://docs.ansible.com/ansible/latest/plugins/strategy/linear.html#linear-strategy), where each task is run on up to serial hosts in parallel. Ansible waits for all hosts to complete the task before starting the next task on all the hosts. The [free strategy](https://docs.ansible.com/ansible/latest/plugins/strategy/free.html) lets each host run independently, starting its next task as soon as it finishes the previous one, regardless of how far other hosts have proceeded. The free strategy is used in the next article on [Locking Simultaneous Access to Hosts in Ansible Tower](https://github.com/IBM/IBMDeveloper-recipes/blob/main/locking-simultaneous-access-to-hosts-in-ansible-playbooks/index.md).
 
 #### 7. Executing the job
 
@@ -331,18 +331,18 @@ This article provides a recipe to retrieve output parameters from a playbook for
 Hope you have enjoyed the article. Share your thoughts in the comments or engage in the conversation with me on Twitter @aakarve. I look forward to hearing about how you retrieve Ansible Tower job run results for external use in your automation and if you would like to see something covered in more detail.
 
 #### 12. References
-- Ansible Tower REST API https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html
-- Filtering a collection in Ansible Tower https://docs.ansible.com/ansible-tower/latest/html/towerapi/filtering.html
-- Print to standard output without escaping https://ansibledaily.com/print-to-standard-output-without-escaping/
-- Source code for above recipe https://github.com/thinkahead/DeveloperRecipes/tree/master/RetrieveResultsFromTower
-- Multiple Jumphosts in Ansible Tower -- Part 1: Connecting to Linux hosts using ssh with nested ProxyCommand <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-1>
-- Multiple Jumphosts in Ansible Tower -- Part 2: Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-2>
-- Multiple Jumphosts in Ansible Tower -- Part 3: Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-3>
-- Multiple Jumphosts in Ansible Tower -- Part 4: Multi jumphost connections to Linux hosts using ssh-add to add keys to ssh-agent <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-4/>
-- Multiple Jumphosts in Ansible Tower -- Part 5: Unix domain socket file instead of socks port <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-5/>
-- Multiple Jumphosts in Ansible Tower -- Part 6: Primary and Secondary/Backup Jumphosts and Reverse ssh Tunnel <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-6/>
-- Multiple Jumphosts in Ansible Tower -- Part 7: Failover using redundant jumphosts, tweaking ssh parameters and memory requirements for jumphosts <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-7/>
-- Multiple Jumphosts in Ansible Tower -- Part 8: Transferring files using ansible synchronize module and rsync <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-8/>
-- Multiple Jumphosts in Ansible Tower -- Part 9: Pull secrets from remote 3rd-party vaults over multiple jumphost hops <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-9/>
-- Multiple Jumphosts in Ansible Tower -- Part 10: Using Container Groups instead of bubblewrap for isolation of jobs <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-10/>
-- Multiple Jumphosts in Ansible Tower -- Part 11: Using Container Groups with sshuttle proxy <https://developer.ibm.com/recipes/tutorials/multiple-jumphosts-in-ansible-tower-part-11/>
+- [Ansible Tower REST API](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html)
+- [Filtering a collection in Ansible Tower](https://docs.ansible.com/ansible-tower/latest/html/towerapi/filtering.html)
+- [Print to standard output without escaping](https://ansibledaily.com/print-to-standard-output-without-escaping/)
+- [Source code for above recipe](https://github.com/thinkahead/DeveloperRecipes/tree/master/RetrieveResultsFromTower)
+- [Multiple Jumphosts in Ansible Tower -- Part 1: Connecting to Linux hosts using ssh with nested ProxyCommand](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-1/)
+- [Multiple Jumphosts in Ansible Tower -- Part 2: Connecting to Windows/Linux hosts with ssh tunnel SOCKS5 proxy](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-2)
+- [Multiple Jumphosts in Ansible Tower -- Part 3: Ssh tunnel SOCKS5 proxy with passphrase enabled for ssh keys](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-3)
+- [Multiple Jumphosts in Ansible Tower -- Part 4: Multi jumphost connections to Linux hosts using ssh-add to add keys to ssh-agent](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-4/)
+- [Multiple Jumphosts in Ansible Tower -- Part 5: Unix domain socket file instead of socks port](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-5/)
+- [Multiple Jumphosts in Ansible Tower -- Part 6: Primary and Secondary/Backup Jumphosts and Reverse ssh Tunnel](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-6/)
+- [Multiple Jumphosts in Ansible Tower -- Part 7: Failover using redundant jumphosts, tweaking ssh parameters and memory requirements for jumphosts](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-7/)
+- [Multiple Jumphosts in Ansible Tower -- Part 8: Transferring files using ansible synchronize module and rsync](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-8/)
+- [Multiple Jumphosts in Ansible Tower -- Part 9: Pull secrets from remote 3rd-party vaults over multiple jumphost hops](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-9/)
+- [Multiple Jumphosts in Ansible Tower -- Part 10: Using Container Groups instead of bubblewrap for isolation of jobs](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-10/)
+- [Multiple Jumphosts in Ansible Tower -- Part 11: Using Container Groups with sshuttle proxy](https://github.com/IBM/IBMDeveloper-recipes/blob/main/multiple-jumphosts-in-ansible-tower-part-11/)
