@@ -17,7 +17,7 @@ In combination with automation tools, DevOps pipelines enable teams to meet grow
 DevOps has gained popularity over the last decade as the primary methodology for developing and releasing software. It enables developers and operations teams to collaborate on building high-quality software and frequent releases. One of the most important tools for accomplishing these goals is a DevOps pipeline. In combination with automation tools, DevOps pipelines enable teams to meet growing customer demand for frequent releases and updates.
 
 
-In this article, you will learn what is a DevOps pipeline, what tools you can use for [DevOps automation](https://resources.whitesourcesoftware.com/blog-whitesource/3-key-considerations-for-devops-automation), and tips for optimizing your automation processes.
+In this article, you will learn what is a DevOps pipeline and tools that can be used to support automation. Discover more about [DevOps Automation](https://www.ibm.com/devops-automation), including tips for optimizing your automation processes.
 
 
 ### Step-by-step
